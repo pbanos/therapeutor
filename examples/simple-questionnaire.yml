@@ -1,0 +1,117 @@
+name: simple
+contact: pablo@baden.eu.org
+authors:
+  - Pablo Baños López
+contributors: []
+disclaimer: "Do not use this, seriously."
+variables:
+  - name: ulcer
+    label: Ulcer
+  - name: headache
+    label: Headache
+  - name: temperature
+    label: Temperature
+  - name: alcoholism
+    label: Alcoholism
+  - name: homeopathy_believer
+    label: Homeopathy believer
+  - name: jehovahs_witness
+    label: jehovahs_witness
+sections:
+  - name: Pains
+    description: Pains the patient has
+    questions:
+      - text: Does the patient have abdominal pain?
+        variables:
+          - name: abdominal_pain
+            yes: Just a bit
+            no: Not really
+      - text: Does the patient have other conditions?
+        variables:
+          - name: headache
+            text: Painful headache
+          - name: temperature
+            text: Scorching temperature
+  - name: Concomitant conditions
+    description: Concomitant conditions the patient has
+    questions:
+      - text: Is the patient an alcoholic?
+        variables:
+          - name: alcoholism
+  - name: Belief system
+    description: The belief system of the patient
+    questions:
+      - text: Does the patient belief in homeopathy?
+        variables:
+          - name: homeopathy_believer
+      - text: Is the patient a Jehovah's witness?
+        variables:
+          - name: jehovahs_witness
+preference_orders:
+  - type: static
+    name: price
+    text: This therapy has been prioritized over others with the same level of recommendation because of its price
+    descendent: true
+    property: price
+  - type: dynamic
+    name: concomitant_conditions
+    text: This therapy has been prioritized over others with the same level of recommendation because of the concomitant conditions of the patient
+recommendation_levels:
+  - name: forbidden
+    label: Terminantly forbidden
+    description: This therapy must not be applied
+    color: red
+    banning: true
+  - name: not_recommended
+    label: Not Recommended
+    description: This therapy should not be applied if something else is available
+    color: yellow
+  - name: recommended
+    label: Recommended
+    description: This therapy can be applied
+    color: green
+therapies:
+  - name: homeopathy
+    label: Homeopathy
+    description: Mostly water
+    properties:
+      price: 30
+    level_conditions:
+      not_recommended:
+        subconditions:
+          - text: The patient does not believe in homeopathy
+            negated: true
+            variables:
+              - name: homeopathy_believer
+    order_condition_counts:
+  - name: blood_transfusion
+    label: Blood transfusion
+    description: You know, put someone else's blood in the patient's body
+    properties:
+      price: 25
+    level_conditions:
+      forbidden:
+        variables:
+          - name: jehovahs_witness
+            text: The patient's beliefs prevent performing a blood transfusion
+  - name: aspirin
+    label: Aspirin
+    description: Have the patient take an aspirin
+    properties:
+      price: 3
+    level_conditions:
+      forbidden:
+        variables:
+          - name: ulcer
+            text: The patient has an ulcer and aspirins contraindicated under this condition
+    order_condition_counts:
+      concomitant_conditions:
+        - text: The aspirin treats the headache
+          variables:
+            - name: headache
+        - text: The aspirin treats the temperature
+          variables:
+            - name: temperature
+default_boolean_question:
+  yes: Yes # Default label for boolean positive answers
+  no: No # Default label for boolean negative answers

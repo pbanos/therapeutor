@@ -16,8 +16,10 @@ class Therapeutor::Questionnaire::Therapy
     @level_conditions = (opts[:level_conditions] || []).map do |level, level_condition_data|
       Therapeutor::Questionnaire::Therapy::LevelCondition.new(level_condition_data.merge(therapy: self, level: level))
     end
-    @order_condition_counts = (opts[:order_condition_counts] || []).map do |preference_order, order_condition_count_data|
-      Therapeutor::Questionnaire::Therapy::OrderConditionCount.new(order_condition_count_data.merge(therapy: self, preference_order: preference_order))
+    @order_condition_counts = (opts[:order_condition_counts] || {}).map do |preference_order, order_condition_count_data|
+      order_condition_count_data.map do |single_order_condition_count_data|
+        Therapeutor::Questionnaire::Therapy::OrderConditionCount.new(single_order_condition_count_data.merge(therapy: self, preference_order: preference_order))
+      end
     end
   end
 end

@@ -25,7 +25,7 @@ class Therapeutor::Questionnaire::Therapy::Condition
       end
     end
     @subconditions = (opts[:subconditions]||[]).map do |condition_data|
-      self.class.new(condition_data.merge(therapy: therapy))
+      self.class.new(condition_data.merge(therapy: therapy).except(:must_have_text))
     end
   end
 

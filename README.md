@@ -64,12 +64,43 @@ The input format must be a valid YML file following the schema below:
       description # optional, some text describing the therapy
       properties # the set of values according to which static preference orders must rank the therapy
       level_conditions: {
-        <name of the level>: {
-
+        <name of the level>: { # condition for the assignation of the level: or condition of (optionally negated) variables and subconditions
+          negated
+          variables: [
+            {
+                name # name of the variable
+                text # reason to be shown when the therapy is assigned this level because of the variable activating
+            }
+          ]
+          subconditions: [
+            {
+              text # reason to be shown when the therapy is assigned this level because of the subcondition activating
+              negated
+              variables
+              subconditions
+            }
+          ]
         }
       }
       order_condition_counts: {
-
+        <name of the order condition count>: [
+          { # condition for count increase of the order to therapy: or condition of (optionally negated) variables and subconditions
+            text
+            negated
+            variables: [
+              {
+                  name # name of the variable
+              }
+            ]
+            subconditions: [
+              {
+                negated
+                variables
+                subconditions
+              }
+            ]
+          }
+        ]
       }
     }
   ]
