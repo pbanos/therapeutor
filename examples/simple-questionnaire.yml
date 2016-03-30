@@ -5,6 +5,8 @@ authors:
 contributors: []
 disclaimer: "Do not use this, seriously."
 variables:
+  - name: abdominal_pain
+    label: Abdominal Pain
   - name: ulcer
     label: Ulcer
   - name: headache
@@ -16,7 +18,7 @@ variables:
   - name: homeopathy_believer
     label: Homeopathy believer
   - name: jehovahs_witness
-    label: jehovahs_witness
+    label: Jehovah's witness
 sections:
   - name: Pains
     description: Pains the patient has
@@ -112,6 +114,6 @@ therapies:
         - text: The aspirin treats the temperature
           variables:
             - name: temperature
-default_boolean_question:
-  yes: Yes # Default label for boolean positive answers
-  no: No # Default label for boolean negative answers
+default_boolean_questions:
+  yes: "Yes" # Default label for boolean positive answers
+  no: "No" # Default label for boolean negative answers
