@@ -17,4 +17,10 @@ class Therapeutor::Questionnaire::Section
     end
   end
 
+  def inspect
+    properties = %w(name description).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
+  end
 end

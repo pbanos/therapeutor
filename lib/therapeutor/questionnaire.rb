@@ -1,5 +1,6 @@
 require 'active_model'
 require 'active_support/hash_with_indifferent_access'
+require 'fileutils'
 class Therapeutor::Questionnaire
   include ActiveModel::Validations
 
@@ -32,7 +33,7 @@ class Therapeutor::Questionnaire
     @contact = opts[:contact]
     @authors = opts[:authors]
     @disclaimer = opts[:disclaimer]
-    @default_boolean_questions = opts[:default_boolean_questions]
+    @default_boolean_questions = (opts[:default_boolean_questions]||{}).symbolize_keys
     @variables = (opts[:variables]||[]).map do |variable_data|
       Therapeutor::Questionnaire::Variable.new(variable_data.merge(questionnaire: self))
     end
@@ -76,6 +77,19 @@ class Therapeutor::Questionnaire
     therapies.detect do |therapy|
       therapy.name == name
     end
+  end
+
+  def erb_render(template)
+    questionnaire_binding = binding.taint
+    renderer = ERB.new(template)
+    renderer.result(questionnaire_binding)
+  end
+
+  def inspect
+    properties = %w(name contact authors contributors default_boolean_questions).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
   end
 end
 

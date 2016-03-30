@@ -25,6 +25,13 @@ class Therapeutor::Questionnaire::Therapy::OrderConditionCount
     therapy.questionnaire if therapy
   end
 
+  def inspect
+    properties = %w(preference_order).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
+  end
+
 end
 
 require 'therapeutor/questionnaire/therapy/condition'

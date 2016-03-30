@@ -8,9 +8,17 @@ class Therapeutor::Questionnaire::Variable
   validates :questionnaire, presence: true
 
   def initialize(opts={})
+    opts.symbolize_keys!
     @name = opts[:name]
     @label = opts[:label]
     @questionnaire = opts[:questionnaire]
+  end
+
+  def inspect
+    properties = %w(name label).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
   end
 
 end

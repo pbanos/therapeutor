@@ -19,11 +19,10 @@ class Therapeutor::Questionnaire::Therapy::Condition
     @therapy = opts[:therapy]
     @variables = (opts[:variables]||[]).map do |variable_data|
       variable_data.symbolize_keys!
-      if questionnaire and variable = questionnaire.variable(variable_data[:name])
-        @variable_config[variable.name] = variable_data.except(:name)
-        variable
+      if questionnaire
+        questionnaire.variable(variable_data[:name])
       end
-    end
+    end.compact
     @subconditions = (opts[:subconditions]||[]).map do |condition_data|
       self.class.new(condition_data.merge(therapy: therapy).except(:must_have_text))
     end

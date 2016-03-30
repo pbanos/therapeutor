@@ -17,4 +17,11 @@ class Therapeutor::Questionnaire::RecommendationLevel
     @previously_discarded_level = opts[:previously_discarded_level]
   end
 
+  def inspect
+    properties = %w(name label description color banning).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
+  end
+
 end

@@ -23,6 +23,13 @@ class Therapeutor::Questionnaire::Therapy::LevelCondition
     therapy.questionnaire if therapy
   end
 
+  def inspect
+    properties = %w(level therapy).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
+  end
+
 end
 
 require 'therapeutor/questionnaire/therapy/condition'

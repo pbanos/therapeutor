@@ -18,11 +18,30 @@ class Therapeutor::Questionnaire::Question
         @variable_config[variable.name] = variable_data.except(:name)
         variable
       end
-    end
+    end.compact
   end
 
   def questionnaire
     section.questionnaire if section
+  end
+
+  def yes_text
+    (variable_config.values.first||{})[true] || questionnaire.default_boolean_questions[true]
+  end
+
+  def no_text
+    (variable_config.values.first||{})[false] || questionnaire.default_boolean_questions[false]
+  end
+
+  def variable_text(variable)
+    @variable_config[variable.name][:text] || variable.label
+  end
+
+  def inspect
+    properties = %w(text variables).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
   end
 
 end

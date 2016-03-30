@@ -22,6 +22,13 @@ class Therapeutor::Questionnaire::Therapy
       end
     end
   end
+
+  def inspect
+    properties = %w(name label description).map do |key|
+      "#{key}=#{send(key).inspect}"
+    end.join(' ')
+    "<#{self.class.name} #{properties}>"
+  end
 end
 require 'therapeutor/questionnaire/therapy/level_condition'
 require 'therapeutor/questionnaire/therapy/order_condition_count'
