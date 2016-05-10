@@ -2,14 +2,14 @@
 
 ###*
  # @ngdoc overview
- # @name emilienkoTreeApp
+ # @name <%= code_suitable_name %>
  # @description
- # # emilienkoTreeApp
+ # # <%= code_suitable_name %>
  #
  # Main module of the application.
 ###
 angular
-  .module 'emilienkoTreeApp', [
+  .module '<%= code_suitable_name %>', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -27,4 +27,3 @@ angular
         controller: 'AboutCtrl'
       .otherwise
         redirectTo: '/'
-

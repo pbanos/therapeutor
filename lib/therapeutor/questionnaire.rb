@@ -41,6 +41,7 @@ class Therapeutor::Questionnaire
       Therapeutor::Questionnaire::Section.new(section_data.merge(questionnaire: self))
     end
     @preference_orders = (opts[:preference_orders] || []).map do |preference_order_data|
+      preference_order_data.symbolize_keys!
       if preference_order_data[:type] == 'static'
         Therapeutor::Questionnaire::Therapy::PropertyOrder.new(preference_order_data.except(:type))
       elsif preference_order_data[:type] == 'dynamic'
@@ -48,14 +49,19 @@ class Therapeutor::Questionnaire
       end
     end
     @recommendation_levels = []
-    previously_discarded_level = nil
+    level = nil
     (opts[:recommendation_levels]||[]).each do |level_data|
-      level = Therapeutor::Questionnaire::RecommendationLevel.new(level_data.merge(questionnaire: self, previously_discarded_level: previously_discarded_level))
+      level = Therapeutor::Questionnaire::RecommendationLevel.new(level_data.merge(questionnaire: self, previously_discarded_level: level))
       @recommendation_levels << level
     end
+    @recommendation_levels.last.last = true
     @therapies = (opts[:therapies]||[]).map do |therapy_data|
       Therapeutor::Questionnaire::Therapy.new(therapy_data.merge(questionnaire: self))
     end
+  end
+
+  def code_suitable_name
+    name.tr('^A-Za-z0-9','')
   end
 
   def variable(name)
@@ -81,7 +87,7 @@ class Therapeutor::Questionnaire
 
   def erb_render(template)
     questionnaire_binding = binding.taint
-    renderer = ERB.new(template)
+    renderer = ERB.new(template, nil, '<>-')
     renderer.result(questionnaire_binding)
   end
 

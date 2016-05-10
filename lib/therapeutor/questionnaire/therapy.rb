@@ -23,6 +23,10 @@ class Therapeutor::Questionnaire::Therapy
     end
   end
 
+  def code_suitable_name
+    name.tr('^A-Za-z0-9','')
+  end
+
   def inspect
     properties = %w(name label description).map do |key|
       "#{key}=#{send(key).inspect}"

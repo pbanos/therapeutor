@@ -14,6 +14,10 @@ class Therapeutor::Questionnaire::Variable
     @questionnaire = opts[:questionnaire]
   end
 
+  def code_suitable_name
+    name.tr('^A-Za-z0-9','')
+  end
+
   def inspect
     properties = %w(name label).map do |key|
       "#{key}=#{send(key).inspect}"
