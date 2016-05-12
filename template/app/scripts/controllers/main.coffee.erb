@@ -21,45 +21,109 @@ angular.module '<%= code_suitable_name %>'
             !@<%= previously_discarded_level.code_suitable_name %>(answers) and
             <%- end -%>
             <%- level_condition = therapy.level_conditions.detect{|lc| lc.level == recommendation_level} -%>
-            <%- if level_condition.nil? or (level_condition.condition.variables.empty? and level_condition.condition.subconditions.empty?) -%>
+            <%- if level_condition.nil? or level_condition.conditions.empty? -%>
             <%= recommendation_level.last ? 'true' : 'false' %>
             <%- else -%>
             (
-            <%- level_condition.condition.variables.each do |variable| -%>
-            <%- if level_condition.condition.negated -%>
-            !answers.<%= variable.code_suitable_name %> or
-            <%- else -%>
-            answers.<%= variable.code_suitable_name %> or
-            <%- end -%>
-            <%- end -%>
-            <%- level_condition.condition.subconditions.each do |subcondition| -%>
+            <%- level_condition.conditions.map(&:condition).map(&:to_dnf).each do |condition| -%>
+              <%- if condition.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+            <%= condition.value.to_s %> or
+              <%- elsif condition.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+            answers.<%= variable(condition.name).code_suitable_name %> or
+              <%- elsif condition.is_a?(Therapeutor::BooleanExpression::NotExpression) -%>
+            !answers.<%= variable(condition.operand.name).code_suitable_name %> or
+              <%- elsif condition.is_a?(Therapeutor::BooleanExpression::AndExpression) -%>
             (
-            <%- subcondition.variables.each do |variable| -%>
-            <%- if subcondition.negated -%>
-            !answers.<%= variable.code_suitable_name %> and
-            <%- else -%>
-            answers.<%= variable.code_suitable_name %> and
-            <%- end -%>
-            <%- end -%>
-            <%- subcondition.subconditions.each do |subcondition| -%>
-            <%- subcondition.variables.each do |variable| -%>
-            <%- if subcondition.negated -%>
-            !answers.<%= variable.code_suitable_name %> and
-            <%- else -%>
-            answers.<%= variable.code_suitable_name %> and
-            <%- end -%>
-            <%- end -%>
-            <%- end -%>
-            true) or
+                <%- condition.operands.each do |operand| -%>
+                  <%- if operand.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+            <%= operand.value.to_s %> and
+                  <%- elsif operand.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+            answers.<%= variable(operand.name).code_suitable_name %> and
+                  <%- else -%>
+            !answers.<%= variable(operand.operand.name).code_suitable_name %> and
+                  <%- end -%>
+                <%- end -%>
+            ) or
+              <%- else -%>
+                <%- condition.operands.each do |operand| -%>
+                  <%- if operand.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+            <%= operand.value.to_s %> or
+                  <%- elsif operand.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+            answers.<%= variable(operand.name).code_suitable_name %> or
+                  <%- elsif operand.is_a?(Therapeutor::BooleanExpression::NotExpression) -%>
+            !answers.<%= variable(operand.operand.name).code_suitable_name %> or
+                  <%- else -%>
+            (
+                    <%- operand.operands.each do |operand| -%>
+                      <%- if operand.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+            <%= operand.value.to_s %> and
+                      <%- elsif operand.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+            answers.<%= variable(operand.name).code_suitable_name %> and
+                      <%- else -%>
+            !answers.<%= variable(operand.operand.name).code_suitable_name %> and
+                      <%- end -%>
+                    <%- end -%>
+            ) or
+                  <%- end -%>
+                <%- end -%>
+              <%- end -%>
             <%- end -%>
             false)
-            <%- end -%>
+    <%- end -%>
     <%- end -%>
     <%- preference_orders.select do |order|
       order.is_a?(Therapeutor::Questionnaire::Therapy::ConditionCountOrder)
     end.each do |order| -%>
         <%= order.code_suitable_name %>: (answers) ->
-            [answers.depresin, answers.dolor_neuroptico, answers.eneuresis_nocturna].reduce((total, respuesta) ->
+          <%- order_condition = therapy.order_conditions.detect{|oc| oc.preference_order == order} -%>
+          <%- conditions = order_condition ? order_condition.conditions : [] -%>
+            [
+              <%- conditions.map(&:condition).map(&:to_dnf).each do |condition| -%>
+                <%- if condition.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+              <%= condition.value.to_s %>,
+                <%- elsif condition.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+              answers.<%= variable(condition.name).code_suitable_name %>,
+                <%- elsif condition.is_a?(Therapeutor::BooleanExpression::NotExpression) -%>
+              !answers.<%= variable(condition.operand.name).code_suitable_name %>,
+                <%- elsif condition.is_a?(Therapeutor::BooleanExpression::AndExpression) -%>
+              (
+                  <%- condition.operands.each do |operand| -%>
+                    <%- if operand.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+              <%= operand.value.to_s %> and
+                    <%- elsif operand.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+              answers.<%= variable(operand.name).code_suitable_name %> and
+                    <%- else -%>
+              !answers.<%= variable(operand.operand.name).code_suitable_name %> and
+                    <%- end -%>
+                  <%- end -%>
+              ),
+                <%- else -%>
+              (
+                  <%- condition.operands.each do |operand| -%>
+                    <%- if operand.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+              <%= operand.value.to_s %> or
+                    <%- elsif operand.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+              answers.<%= variable(operand.name).code_suitable_name %> or
+                    <%- elsif operand.is_a?(Therapeutor::BooleanExpression::NotExpression) -%>
+              !answers.<%= variable(operand.operand.name).code_suitable_name %> or
+                    <%- else -%>
+              (
+                      <%- operand.operands.each do |operand| -%>
+                        <%- if operand.is_a?(Therapeutor::BooleanExpression::BooleanConstant) -%>
+              <%= operand.value.to_s %> and
+                        <%- elsif operand.is_a?(Therapeutor::BooleanExpression::Variable) -%>
+              answers.<%= variable(operand.name).code_suitable_name %> and
+                        <%- else -%>
+              !answers.<%= variable(operand.operand.name).code_suitable_name %> and
+                        <%- end -%>
+                      <%- end -%>
+              ) or
+                    <%- end -%>
+                  <%- end -%>
+              ),
+                <%- end -%>
+              <%- end -%>
+            ].reduce((total, respuesta) ->
                 total + (if respuesta then 1 else 0)
           , 0)
     <%- end -%>

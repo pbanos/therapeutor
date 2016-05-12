@@ -80,12 +80,11 @@ therapies:
       price: 30
     level_conditions:
       not_recommended:
-        subconditions:
-          - text: The patient does not believe in homeopathy
-            negated: true
-            variables:
-              - name: homeopathy_believer
-    order_condition_counts:
+        - text: The patient does not believe in homeopathy
+          condition:
+            not:
+              variable: homeopathy_believer
+    order_conditions:
   - name: blood_transfusion
     label: Blood transfusion
     description: You know, put someone else's blood in the patient's body
@@ -93,9 +92,9 @@ therapies:
       price: 25
     level_conditions:
       forbidden:
-        variables:
-          - name: jehovahs_witness
-            text: The patient's beliefs prevent performing a blood transfusion
+        - text: The patient's beliefs prevent performing a blood transfusion
+          condition:
+            variable: jehovahs_witness
   - name: aspirin
     label: Aspirin
     description: Have the patient take an aspirin
@@ -103,17 +102,17 @@ therapies:
       price: 3
     level_conditions:
       forbidden:
-        variables:
-          - name: ulcer
-            text: The patient has an ulcer and aspirins contraindicated under this condition
-    order_condition_counts:
+        - text: The patient has an ulcer and aspirins contraindicated under this condition
+          condition:
+            variable: ulcer
+    order_conditions:
       concomitant_conditions:
         - text: The aspirin treats the headache
-          variables:
-            - name: headache
+          condition:
+            variable: headache
         - text: The aspirin treats the temperature
-          variables:
-            - name: temperature
+          condition:
+            variable: temperature
 default_boolean_questions:
   yes: "Yes" # Default label for boolean positive answers
   no: "No" # Default label for boolean negative answers

@@ -6,17 +6,19 @@
 class Therapeutor::Questionnaire::Therapy::LevelCondition
   include ActiveModel::Validations
 
-  attr_accessor :level, :condition, :therapy
+  attr_accessor :level, :conditions, :therapy
 
   validates :level, presence: true
-  validates :condition, presence: true
+  validates :conditions, presence: true
   validates :therapy, presence: true
 
   def initialize(opts={})
     opts.symbolize_keys!
     @therapy = opts[:therapy]
     @level = questionnaire.recommendation_level(opts.delete(:level))
-    @condition = Therapeutor::Questionnaire::Therapy::Condition.new(opts.merge(must_have_text: true))
+    @conditions = (opts[:conditions] || []).map do |condition_data|
+      Therapeutor::Questionnaire::Therapy::Condition.new(condition_data.merge(therapy: @therapy))
+    end
   end
 
   def questionnaire

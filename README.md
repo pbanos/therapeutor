@@ -6,7 +6,7 @@ therapeutor [-o /app/output/path] [questionnaire.yml | - ]
 
 ## Input format
 
-The input format must be a valid YML file following the schema below:
+The input format must be a valid YAML file following the schema below:
 
 {
   name
@@ -62,43 +62,22 @@ The input format must be a valid YML file following the schema below:
       name # Internal name for the therapy
       label # The label to use to refer to the therapy on the questionnaire
       description # optional, some text describing the therapy
-      properties # the set of values according to which static preference orders must rank the therapy
-      level_conditions: {
-        <name of the level>: { # condition for the assignation of the level: or condition of (optionally negated) variables and subconditions
-          negated
-          variables: [
-            {
-                name # name of the variable
-                text # reason to be shown when the therapy is assigned this level because of the variable activating
-            }
-          ]
-          subconditions: [
-            {
-              text # reason to be shown when the therapy is assigned this level because of the subcondition activating
-              negated
-              variables
-              subconditions
-            }
-          ]
-        }
+      properties: { # the set of values according to which static preference orders must rank the therapy
+        <name of property>: <numeric value>
       }
-      order_condition_counts: {
+      level_conditions: {
+        <name of the level>: [
+          { # condition for the level activating for the therapy
+            text # reason to be shown when the therapy is assigned this level because of the condition activating
+            condition # boolean expression that activates the condition when evaluated to true, expressed in the format described below
+          }
+        ]
+      }
+      order_conditions: {
         <name of the order condition count>: [
-          { # condition for count increase of the order to therapy: or condition of (optionally negated) variables and subconditions
-            text
-            negated
-            variables: [
-              {
-                  name # name of the variable
-              }
-            ]
-            subconditions: [
-              {
-                negated
-                variables
-                subconditions
-              }
-            ]
+          { # condition for count increase of the order of the therapy
+            text # reason to be shown when the condition activates for the therapy
+            condition # boolean expression that activates the condition when evaluated to true, expressed in the format described below
           }
         ]
       }
@@ -109,3 +88,42 @@ The input format must be a valid YML file following the schema below:
     no # Default label for boolean negative answers
   }
 }
+
+### Boolean Expression format
+
+A boolean expression can be one of the following:
+
+* A variable, specified as
+        variable: <name of the variable>
+* A boolean constant. True is specified as
+        constant: true
+  and false is specified as
+        constant: false
+* A boolean negation of a boolean expression, specified as:
+        not: <expression>
+* A boolean AND of a set of expressions, specified as:
+        and:
+          - <expression 1>
+          - <expression 2>
+          - [...]
+          - <expression n>
+* A boolean OR of a set of expressions, specified as:
+        or:
+          - <expression 1>
+          - <expression 2>
+          - [...]
+          - <expression n>
+
+Thus, to specify "a & ¬( b | c | ¬d | false | (e & f))" we would type:
+        and:
+          - variable: a
+          - not:
+              or:
+                - variable: b
+                - variable: c
+                - not:
+                    variable: d
+                - constant: false
+                - and:
+                    - variable: e
+                    - variable: f

@@ -1,3 +1,4 @@
+require 'therapeutor/boolean_expression'
 # Represents a boolean condition related to a therapy.
 # The represented condition is defined in function of the contained variables
 # and subconditions as follows:
@@ -6,7 +7,7 @@
 class Therapeutor::Questionnaire::Therapy::Condition
   include ActiveModel::Validations
 
-  attr_accessor :variables, :subconditions, :text, :negated, :therapy, :must_have_text
+  attr_accessor :text, :condition, :therapy
 
   validates :text, presence: { if: :must_have_text}
   validates :therapy, presence: true
@@ -14,18 +15,8 @@ class Therapeutor::Questionnaire::Therapy::Condition
   def initialize(opts={})
     opts.symbolize_keys!
     @text = opts[:text]
-    @must_have_text = opts[:must_have_text]
-    @negated = !!opts[:negated]
     @therapy = opts[:therapy]
-    @variables = (opts[:variables]||[]).map do |variable_data|
-      variable_data.symbolize_keys!
-      if questionnaire
-        questionnaire.variable(variable_data[:name])
-      end
-    end.compact
-    @subconditions = (opts[:subconditions]||[]).map do |condition_data|
-      self.class.new(condition_data.merge(therapy: therapy).except(:must_have_text))
-    end
+    @condition = Therapeutor::BooleanExpression::HashParser.parse(questionnaire, opts[:condition])
   end
 
   def questionnaire
