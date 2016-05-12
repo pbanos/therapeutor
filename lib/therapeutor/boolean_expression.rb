@@ -40,14 +40,12 @@ class Therapeutor::BooleanExpression
 
     def to_cnf
       self.class.new(to_nnf.operands.map do |operand|
-        #puts "Converting operand #{operand} to CNF"
         operand.to_cnf
       end).to_nnf
     end
 
     def to_dnf
       self.class.new(to_nnf.operands.map do |operand|
-        #puts "Converting operand #{operand} to DNF"
         operand.to_dnf
       end).to_nnf
       #self.class.new(to_nnf.operands.map(&:to_dnf))
@@ -65,25 +63,19 @@ class Therapeutor::BooleanExpression
 
     def distribution_over_de_morgan_complementary
       nnf = to_nnf
-      #puts "Calculating distribution over morgan complementary for: #{nnf}"
       operands_to_distribute = nnf.operands.select do |operand|
         operand.class == self.class.de_morgan_complementary
       end
       return nnf if operands_to_distribute.empty?
       result = self.class.de_morgan_complementary.new([self.class.new(nnf.operands - operands_to_distribute)])
-      #puts "Initial result: #{result}"
       operands_to_distribute.each do |operand_to_distribute|
-        #puts "distributing operand #{operand_to_distribute} over #{result}"
         result = self.class.de_morgan_complementary.new(operand_to_distribute.operands.map do |suboperand_to_distribute|
           result.operands.map do |result_suboperand|
             self.class.new([result_suboperand, suboperand_to_distribute])
           end.tap do |r|
-            #puts "distributing suboperand #{suboperand_to_distribute} over #{result} provides: #{r}"
           end
         end.flatten).to_nnf
-        #puts "distribution provides: #{result}"
       end
-      #puts "Final result: #{result}"
       result
     end
   end
@@ -158,7 +150,6 @@ class Therapeutor::BooleanExpression
     def to_dnf
       distribution = distribution_over_de_morgan_complementary
       distribution.class.new(distribution.operands.map do |operand|
-        #puts "Converting distributed operand #{operand} to DNF"
         operand.to_dnf
       end).to_nnf
     end
@@ -176,7 +167,6 @@ class Therapeutor::BooleanExpression
     def to_cnf
       distribution = distribution_over_de_morgan_complementary
       distribution.class.new(distribution.operands.map do |operand|
-        #puts "Converting distributed operand #{operand} to CNF"
         operand.to_cnf
       end).to_nnf
     end
