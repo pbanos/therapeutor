@@ -39,12 +39,12 @@ The input format must be a valid YAML file following the schema below:
       ]
     }
   ]
-  preference_orders: [
+  preference_orders: [ #Order of preference orders matters: Preference orders only influence a therapy over another if previous orders have not been able to decide between the two.
     {
       type #either 'static' (depends on therapy property) or 'dynamic' (depends on the number of answers satisfying therapy-dependent conditions)
       name
       text # Description to show when preference order resolves a draw
-      descendent # optional, set to some value to indicate lower values are preferred
+      descending # optional, set to some value to indicate lower values are preferred
       property # only for static-typed, the name of the therapy property to use
     }
   ]

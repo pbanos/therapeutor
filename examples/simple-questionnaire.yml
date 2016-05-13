@@ -50,14 +50,14 @@ sections:
         variables:
           - name: jehovahs_witness
 preference_orders:
-  - type: static
-    name: price
-    text: This therapy has been prioritized over others with the same level of recommendation because of its price
-    descendent: true
-    property: price
   - type: dynamic
     name: concomitant_conditions
     text: This therapy has been prioritized over others with the same level of recommendation because of the concomitant conditions of the patient
+  - type: static
+    name: price
+    text: This therapy has been prioritized over others with the same level of recommendation because of its price
+    descending: true
+    property: price
 recommendation_levels:
   - name: forbidden
     label: Terminantly forbidden

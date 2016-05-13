@@ -43,9 +43,9 @@ class Therapeutor::Questionnaire
     @preference_orders = (opts[:preference_orders] || []).map do |preference_order_data|
       preference_order_data.symbolize_keys!
       if preference_order_data[:type] == 'static'
-        Therapeutor::Questionnaire::Therapy::PropertyOrder.new(preference_order_data.except(:type))
+        Therapeutor::Questionnaire::Therapy::PropertyOrder.new(preference_order_data.except(:type).merge(questionnaire: self))
       elsif preference_order_data[:type] == 'dynamic'
-        Therapeutor::Questionnaire::Therapy::ConditionCountOrder.new(preference_order_data.except(:type))
+        Therapeutor::Questionnaire::Therapy::ConditionCountOrder.new(preference_order_data.except(:type).merge(questionnaire: self))
       end
     end
     @recommendation_levels = []

@@ -1,7 +1,7 @@
 class Therapeutor::Questionnaire::Therapy::PreferenceOrder
   include ActiveModel::Validations
 
-  attr_accessor :name, :text, :descendent, :questionnaire
+  attr_accessor :name, :text, :descending, :questionnaire
 
   validates :name, presence: true
   validates :questionnaire, presence: true
@@ -10,7 +10,7 @@ class Therapeutor::Questionnaire::Therapy::PreferenceOrder
     opts.symbolize_keys!
     @name = opts[:name]
     @text = opts[:text]
-    @descendent = !!opts[:descendent]
+    @descending = !!opts[:descending]
     @questionnaire = opts[:questionnaire]
   end
 
@@ -18,8 +18,15 @@ class Therapeutor::Questionnaire::Therapy::PreferenceOrder
     name.tr('^A-Za-z0-9','')
   end
 
+  def previous_preference_orders
+    preference_orders = questionnaire.preference_orders
+    preference_orders.select do |e|
+      preference_orders.index(e) < preference_orders.index(self)
+    end
+  end
+
   def inspect
-    properties = %w(name text descendent).map do |key|
+    properties = %w(name text descending).map do |key|
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
