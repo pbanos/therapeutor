@@ -1,0 +1,199 @@
+name: Diabetes therapeutic algorithm
+contact: pablo@baden.eu.org
+authors:
+  - Pablo Baños López
+contributors: []
+disclaimer: 'Do not use this, seriously. Adaptation from <img src="http://www.revespcardiol.org/imatges/255/255v61n07/grande/255v61n07-13124414fig16.jpg" alt="Figure 10. ADA/EASD algorithm for blood glucose control in type 2 diabetes (adapted from Nathan et al47). HbA1c, glycohemoglobin."/> (Figure 10) found in <a href="http://www.revespcardiol.org/en/obesity-metabolic-syndrome-and-diabetes/articulo/13124414/">Obesity, Metabolic Syndrome and Diabetes: Cardiovascular Implications and Therapy</a> by Eduardo Alegría Ezquerra, José M Castellano Vázquez, Ana Alegría Barrero (Departamento de Cardiología, Clínica Universitaria de Navarra, Pamplona, Navarra, Spain)</a>'
+variables:
+  - name: applyingLifeStylePlusMetformin
+    label: applyingLifeStylePlusMetformin
+  - name: hbA1CUnder7Percent
+    label: hbA1CUnder7Percent
+  - name: applyingBaselineInsuline
+    label: applyingBaselineInsuline
+  - name: applyingSulfonylurea
+    label: applyingSulfonylurea
+  - name: applyingGlitazone
+    label: applyingGlitazone
+sections:
+  - name: Lifestyle + Metformin (Phase 1)
+    description: Some questions about whether Lifestyle + Metformin is applied
+    questions:
+      - text: Is the patient adapting its Lifestyle and taking Metformin?
+        variables:
+          - name: applyingLifeStylePlusMetformin
+            yes: "Yes"
+            no: "No"
+  - name: Current HbA1C of the patient
+    description: A question about the HbA1C of the patient
+    questions:
+      - text: Is the patient's current HbA1C less than 7%?
+        variables:
+          - name: hbA1CUnder7Percent
+            yes: "Yes"
+            no: "No"
+  - name: Phase 2
+    description: Questions about the patient taking baseline insuline, sulfonylurea or glitazone
+    questions:
+      - text: Is the patient taking baseline insuline?
+        variables:
+          - name: applyingBaselineInsuline
+      - text: Is the patient taking sulfonylurea?
+        variables:
+          - name: applyingSulfonylurea
+      - text: Is the patient taking glitazone?
+        variables:
+          - name: applyingGlitazone
+preference_orders:
+  - type: static
+    name: effectivity
+    label: Effectivity
+    draw_resolution_text: This therapy has been prioritized over others with the same level of recommendation because of its effectivity
+    property: effectivity
+  - type: static
+    name: hypoglycemia
+    label: Hypoglycemia
+    draw_resolution_text: This therapy has been prioritized over others with the same level of recommendation because of its low hypoglycemic effects
+    descending: true
+    property: hypoglycemia
+  - type: static
+    name: price
+    label: Price
+    draw_resolution_text: This therapy has been prioritized over others with the same level of recommendation because of its price
+    descending: true
+    property: price
+recommendation_levels:
+  - name: alreadyApplied
+    label: Already applied
+    description: The patient is already trying this therapy
+    color: red
+    banning: true
+  - name: notRecommended
+    label: Not recommended
+    description: Some other therapy should be tried before
+    color: red
+    banning: true
+  - name: notNeeded
+    label: Not needed
+    description: The patient does not need this therapy
+    color: yellow
+    banning: true
+  - name: recommended
+    label: Recommended
+    description: This therapy should be applied
+    color: green
+therapies:
+  - name: lifestylePlusMetformin
+    label: Lifestyle + Metformin
+    description: The patient must adapt its lifestyle and start taking metformin
+    properties:
+      price: 10
+      hypoglycemia: 5
+      effectivity: 10
+    level_conditions:
+      alreadyApplied:
+        - text: The patient is already adapting its lifestle and taking metformin
+          condition:
+            variable: applyingLifeStylePlusMetformin
+    order_conditions:
+  - name: baselineInsuline
+    label: Baseline Insuline
+    description:
+    properties:
+      price: 30
+      hypoglycemia: 5
+      effectivity: 100
+    level_conditions:
+      alreadyApplied:
+        - text: The patient's is already taking baseline Insuline
+          condition:
+            variable: applyingBaselineInsuline
+      notRecommended:
+        - text: The patient has not tried adapting its lifestyle and taking metformin
+          condition:
+            not:
+              variable: applyingLifeStylePlusMetformin
+        - text: The patient is already taking Sulfonylurea
+          condition:
+            variable: applyingSulfonylurea
+        - text: The patient is already taking Glitazone
+          condition:
+            variable: applyingGlitazone
+      notNeeded:
+        - text: The patient has the HbA1C under control and does not need any more treatment
+          condition:
+            variable: hbA1CUnder7Percent
+  - name: sulfonylurea
+    label: Sulfonylurea
+    description:
+    properties:
+      price: 10
+      hypoglycemia: 5
+      effectivity: 50
+    level_conditions:
+      alreadyApplied:
+        - text: The patient's is already taking Sulfonylurea
+          condition:
+            variable: applyingSulfonylurea
+      notRecommended:
+        - text: The patient has not tried adapting its lifestyle and taking metformin
+          condition:
+            not:
+              variable: applyingLifeStylePlusMetformin
+        - text: The patient is already taking baseline Insuline
+          condition:
+            variable: applyingBaselineInsuline
+      notNeeded:
+        - text: The patient has the HbA1C under control and does not need any more treatment
+          condition:
+            variable: hbA1CUnder7Percent
+  - name: glitazone
+    label: Glitazone
+    description:
+    properties:
+      price: 40
+      hypoglycemia: 0
+      effectivity: 45
+    level_conditions:
+      alreadyApplied:
+        - text: The patient's is already taking Glitazone
+          condition:
+            variable: applyingGlitazone
+      notRecommended:
+        - text: The patient has not tried adapting its lifestyle and taking metformin
+          condition:
+            not:
+              variable: applyingLifeStylePlusMetformin
+        - text: The patient is already taking baseline Insuline
+          condition:
+            variable: applyingBaselineInsuline
+      notNeeded:
+        - text: The patient has the HbA1C under control and does not need any more treatment
+          condition:
+            variable: hbA1CUnder7Percent
+  - name: moreInsuline
+    label: More Insuline/Intensify Insuline
+    level_conditions:
+      notRecommended:
+        - text: The patient has not tried adapting its lifestyle and taking metformin
+          condition:
+            not:
+              variable: applyingLifeStylePlusMetformin
+        - text: Baseline insuline, sulfonylurea or glitazone have not been attempted
+          condition:
+            and:
+              - not:
+                  variable: applyingBaselineInsuline
+              - not:
+                  variable: applyingSulfonylurea
+              - not:
+                  variable: applyingGlitazone
+      notNeeded:
+        - text: The patient has the HbA1C under control and does not need any more treatment
+          condition:
+            variable: hbA1CUnder7Percent
+default_boolean_questions:
+  yes: "Yes" # Default label for boolean positive answers
+  no: "No" # Default label for boolean negative answers
+no_suitable_therapies_text: The patient's diabetes is under control
+show_complete_evaluation_text: Show evaluation for all therapies
