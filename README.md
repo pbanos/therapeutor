@@ -1,6 +1,6 @@
 # therapeutor
 
-Generator of automatised theraupetic questionnaires. The idea behind this project was allowing doctors unable to code to generate questionnaires like [Migratron](https://github.com/pbanos/migratron)
+Generator of automatised therapy-deciding questionnaires. The idea behind this project was allowing doctors unable to code to generate questionnaires like [Migratron](https://github.com/pbanos/migratron)
 
 ## Install (TODO)
 To install therapeutor run the following
@@ -16,7 +16,7 @@ To generate a questionnaire using a questionnaire specification in YAML
 
 Therapeutor's app template is a parametrization of a [yeoman generator-angular](https://github.com/yeoman/generator-angular), therefore you will need to satisfy is requirements in order to run in:
 
-npm install -g grunt-cli bower yo generator-karma generator-angular
+        npm install -g grunt-cli bower yo generator-karma generator-angular
 
 In order to start the app, run the following:
 
@@ -115,6 +115,8 @@ The input format must be a valid YAML file following the schema below:
           no_suitable_therapies_text # Text to show when no suitable therapies can be recommended
           show_complete_evaluation_text # Text to describe the enabler/disabler that shows/hides all therapies evaluations
         }
+
+Some questionnaire YAML examples can be found on the examples directory of the repository
 
 ### Boolean Expression format
 A boolean expression can be one of the following:
