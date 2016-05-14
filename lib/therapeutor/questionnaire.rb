@@ -15,7 +15,9 @@ class Therapeutor::Questionnaire
     :preference_orders,
     :recommendation_levels,
     :therapies,
-    :default_boolean_questions
+    :default_boolean_questions,
+    :no_suitable_therapies_text,
+    :show_complete_evaluation_text
   )
 
   DEFAULT_CONFIG= {
@@ -58,6 +60,8 @@ class Therapeutor::Questionnaire
     @therapies = (opts[:therapies]||[]).map do |therapy_data|
       Therapeutor::Questionnaire::Therapy.new(therapy_data.merge(questionnaire: self))
     end
+    @no_suitable_therapies_text = opts[:no_suitable_therapies_text]
+    @show_complete_evaluation_text = opts[:show_complete_evaluation_text]
   end
 
   def code_suitable_name
@@ -82,6 +86,12 @@ class Therapeutor::Questionnaire
   def therapy(name)
     therapies.detect do |therapy|
       therapy.name == name
+    end
+  end
+
+  def condition_count_orders
+    preference_orders.select do |order|
+      order.is_a?(Therapeutor::Questionnaire::Therapy::ConditionCountOrder)
     end
   end
 

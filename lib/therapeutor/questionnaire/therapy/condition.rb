@@ -9,8 +9,9 @@ class Therapeutor::Questionnaire::Therapy::Condition
 
   attr_accessor :text, :condition, :therapy
 
-  validates :text, presence: { if: :must_have_text}
+  validates :text, presence: true
   validates :therapy, presence: true
+  validates :condition, presence: true
 
   def initialize(opts={})
     opts.symbolize_keys!

@@ -52,10 +52,13 @@ sections:
 preference_orders:
   - type: dynamic
     name: concomitant_conditions
-    text: This therapy has been prioritized over others with the same level of recommendation because of the concomitant conditions of the patient
+    label: Concomitant conditions
+    text: This therapy is also beneficial for the following concomitant conditions in the patient
+    draw_resolution_text: This therapy has been prioritized over others with the same level of recommendation because of the concomitant conditions of the patient.
   - type: static
     name: price
-    text: This therapy has been prioritized over others with the same level of recommendation because of its price
+    label: Price
+    draw_resolution_text: This therapy has been prioritized over others with the same level of recommendation because of its price
     descending: true
     property: price
 recommendation_levels:
@@ -102,7 +105,7 @@ therapies:
       price: 3
     level_conditions:
       forbidden:
-        - text: The patient has an ulcer and aspirins contraindicated under this condition
+        - text: The patient has an ulcer and aspirins are contraindicated under this condition
           condition:
             variable: ulcer
     order_conditions:
@@ -116,3 +119,5 @@ therapies:
 default_boolean_questions:
   yes: "Yes" # Default label for boolean positive answers
   no: "No" # Default label for boolean negative answers
+no_suitable_therapies_text: No therapy can be recommended
+show_complete_evaluation_text: Show evaluations of ALL therapies

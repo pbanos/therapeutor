@@ -1,11 +1,25 @@
 # therapeutor
 Generator of automatised theraupetic questionnaires
 
+## Install (TODO)
+To install therapeutor run the following
+
+        gem install therapeutor
+
 ## Usage
-therapeutor [-o /app/output/path] [questionnaire.yml | - ]
+To generate a questionnaire using a questionnaire specification in YAML
 
-## Input format
+        therapeutor generate path/to/questionnaire.yml  path/for/questionnaire/app
 
+Once the questionnaire app has been generated, run the following to start the app:
+
+        cd path/for/questionnaire/app
+        npm install
+        grunt serve
+
+Finally, to b
+
+## YAML questionnaire format
 The input format must be a valid YAML file following the schema below:
 
 {
@@ -42,8 +56,10 @@ The input format must be a valid YAML file following the schema below:
   preference_orders: [ #Order of preference orders matters: Preference orders only influence a therapy over another if previous orders have not been able to decide between the two.
     {
       type #either 'static' (depends on therapy property) or 'dynamic' (depends on the number of answers satisfying therapy-dependent conditions)
-      name
-      text # Description to show when preference order resolves a draw
+      name # Internal name for the order
+      label # The text to show the order as
+      text # Description of the order
+      drawing_resolution_text # Text to show when preference order resolves a draw
       descending # optional, set to some value to indicate lower values are preferred
       property # only for static-typed, the name of the therapy property to use
     }
@@ -74,7 +90,7 @@ The input format must be a valid YAML file following the schema below:
         ]
       }
       order_conditions: {
-        <name of the order condition count>: [
+        <name of the dynamic order>: [
           { # condition for count increase of the order of the therapy
             text # reason to be shown when the condition activates for the therapy
             condition # boolean expression that activates the condition when evaluated to true, expressed in the format described below
@@ -87,10 +103,11 @@ The input format must be a valid YAML file following the schema below:
     yes # Default label for boolean positive answers
     no # Default label for boolean negative answers
   }
+  no_suitable_therapies_text # Text to show when no suitable therapies can be recommended
+  show_complete_evaluation_text # Text to describe the enabler/disabler that shows/hides all therapies evaluations
 }
 
 ### Boolean Expression format
-
 A boolean expression can be one of the following:
 
 * A variable, specified as

@@ -1,7 +1,7 @@
 class Therapeutor::Questionnaire::Therapy::PreferenceOrder
   include ActiveModel::Validations
 
-  attr_accessor :name, :text, :descending, :questionnaire
+  attr_accessor :name, :label, :text, :draw_resolution_text, :descending, :questionnaire
 
   validates :name, presence: true
   validates :questionnaire, presence: true
@@ -9,7 +9,9 @@ class Therapeutor::Questionnaire::Therapy::PreferenceOrder
   def initialize(opts={})
     opts.symbolize_keys!
     @name = opts[:name]
+    @label = opts[:label]
     @text = opts[:text]
+    @draw_resolution_text = opts[:draw_resolution_text]
     @descending = !!opts[:descending]
     @questionnaire = opts[:questionnaire]
   end

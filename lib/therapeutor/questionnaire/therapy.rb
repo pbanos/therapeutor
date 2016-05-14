@@ -12,7 +12,7 @@ class Therapeutor::Questionnaire::Therapy
     @label = opts[:label]
     @description = opts[:description]
     @questionnaire = opts[:questionnaire]
-    @properties = opts[:properties] || {}
+    @properties = opts[:properties] || {}
     @level_conditions = (opts[:level_conditions] || {}).map do |level, level_condition_data|
       Therapeutor::Questionnaire::Therapy::LevelCondition.new(therapy: self, level: level, conditions: level_condition_data)
     end
