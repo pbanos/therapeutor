@@ -6,7 +6,7 @@ class Therapeutor::Questionnaire
 
   attr_accessor(
     :name,
-    :contact,
+    :description,
     :authors,
     :contributors,
     :disclaimer,
@@ -32,8 +32,13 @@ class Therapeutor::Questionnaire
   def initialize(opts = {})
     opts = DEFAULT_CONFIG.deep_merge(opts).symbolize_keys
     @name = opts[:name]
-    @contact = opts[:contact]
-    @authors = opts[:authors]
+    @description = opts[:description]
+    @authors = opts[:authors].map do |author_data|
+      Therapeutor::Questionnaire::Contact.new(author_data)
+    end
+    @contributors = (opts[:contributors]||[]).map do |contributor_data|
+      Therapeutor::Questionnaire::Contact.new(contributor_data)
+    end
     @disclaimer = opts[:disclaimer]
     @default_boolean_questions = (opts[:default_boolean_questions]||{}).symbolize_keys
     @variables = (opts[:variables]||[]).map do |variable_data|
@@ -102,13 +107,14 @@ class Therapeutor::Questionnaire
   end
 
   def inspect
-    properties = %w(name contact authors contributors default_boolean_questions).map do |key|
+    properties = %w(name authors contributors default_boolean_questions).map do |key|
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
   end
 end
 
+require 'therapeutor/questionnaire/contact'
 require 'therapeutor/questionnaire/variable'
 require 'therapeutor/questionnaire/section'
 require 'therapeutor/questionnaire/recommendation_level'

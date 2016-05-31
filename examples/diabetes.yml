@@ -1,9 +1,13 @@
 name: Diabetes therapeutic algorithm
-contact: pablo@baden.eu.org
+description: 'Adaptation from <img src="http://www.revespcardiol.org/imatges/255/255v61n07/grande/255v61n07-13124414fig16.jpg" alt="Figure 10. ADA/EASD algorithm for blood glucose control in type 2 diabetes (adapted from Nathan et al47). HbA1c, glycohemoglobin."/> (Figure 10) found in <a href="http://www.revespcardiol.org/en/obesity-metabolic-syndrome-and-diabetes/articulo/13124414/">Obesity, Metabolic Syndrome and Diabetes: Cardiovascular Implications and Therapy</a> by Eduardo Alegría Ezquerra, José M Castellano Vázquez, Ana Alegría Barrero (Departamento de Cardiología, Clínica Universitaria de Navarra, Pamplona, Navarra, Spain)</a>'
 authors:
-  - Pablo Baños López
+  - name: Pablo Baños López
+    email: pablo@baden.eu.org
+    twitter: '@pbl86'
+    site: https://github.com/pbanos
+    organization: "Some organization"
 contributors: []
-disclaimer: 'Do not use this, seriously. Adaptation from <img src="http://www.revespcardiol.org/imatges/255/255v61n07/grande/255v61n07-13124414fig16.jpg" alt="Figure 10. ADA/EASD algorithm for blood glucose control in type 2 diabetes (adapted from Nathan et al47). HbA1c, glycohemoglobin."/> (Figure 10) found in <a href="http://www.revespcardiol.org/en/obesity-metabolic-syndrome-and-diabetes/articulo/13124414/">Obesity, Metabolic Syndrome and Diabetes: Cardiovascular Implications and Therapy</a> by Eduardo Alegría Ezquerra, José M Castellano Vázquez, Ana Alegría Barrero (Departamento de Cardiología, Clínica Universitaria de Navarra, Pamplona, Navarra, Spain)</a>'
+disclaimer: 'Do not use this, seriously.'
 variables:
   - name: applyingLifeStylePlusMetformin
     label: applyingLifeStylePlusMetformin

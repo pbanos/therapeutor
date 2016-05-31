@@ -1,8 +1,10 @@
 name: simple
-contact: pablo@baden.eu.org
 authors:
-  - Pablo Baños López
-contributors: []
+  - name: Pablo Baños López
+    email: pablo@baden.eu.org
+    twitter: '@pbl86'
+    site: https://github.com/pbanos
+    organization: "Some organization"
 disclaimer: "Do not use this, seriously."
 variables:
   - name: abdominal_pain

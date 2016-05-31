@@ -54,11 +54,21 @@ Finally, to package the app for deployment in production run:
 
 Therapeutor questionnaires are specified in [YAML](https://en.wikipedia.org/wiki/YAML) format ([JSON](http://www.json.org/), as a subset of it, can be used as well) as an associative array with the following properties:
 
-* name
-* contact. An email address to show as contact.
-* authors. An associative array of names of authors
-* contributors. An associative array of names of contributors
-* disclaimer
+* name. A name for the questionnaire application.
+* description. An optional text describing the questionnaire to be shown on the about section of the generated application.
+* authors. A list of associative arrays with the following properties:
+	* name. The name of the author
+	* email. An optional email of contact of the author.
+	* twitter. An optional twitter account of the author.
+	* site. An optional URL describing the author.
+	* organization. An optional text describing the organization to which the author belongs to.
+* contributors. An optional list of associative arrays with the following properties:
+	* name. The name of the contributor
+	* email. An optional email of contact of the contributor.
+	* twitter. An optional twitter account of the contributor.
+	* site. An optional URL describing the contributor.
+	* organization. An optional text describing the organization to which the contributor belongs to.
+* disclaimer. Text to be shown to prevent the incorrect use or understanding of the questionnaire. It may contain html code.
 * variables. This element is described later on.
 * sections. This element is described later on.
 * preference_orders. This element is described later on.
@@ -70,7 +80,7 @@ Therapeutor questionnaires are specified in [YAML](https://en.wikipedia.org/wiki
 * no_suitable_therapies_text. Text to show when no suitable therapies can be recommended
 * show_complete_evaluation_text. Text to describe the enabler/disabler that shows/hides all therapies evaluations
 
-Some questionnaire YAML examples can be found on the examples directory of the repository
+Some questionnaire YAML examples can be found on the [examples directory of the repository](https://github.com/pbanos/therapeutor/tree/master/examples).
 
 ### Variables
 
@@ -194,7 +204,7 @@ On the specification, the *preference_orders* element is a list of associative a
 * type: it must be set to 'static' to declare the order as a static preference order
 * name: an internal name for identifying the preference order
 * label: a label to show the preference order as on the evaluation of therapies
-* *drawing_resolution_text*: a text to show when the preference order has been determinant for the therapy selection
+* *draw_resolution_text*: a text to show when the preference order has been determinant for the therapy selection
 * descending: an optional property indicating a lower value indicates higher preference, false by default
 * property: the name of the therapy property to use for sorting
 
@@ -204,7 +214,7 @@ The following properties are available for dynamic preference orders:
 * name: an internal name for identifying the preference order
 * label: a label to show the preference order as on the evaluation of therapies
 * text: a description of the order that will precede the description of satisfied conditions on the evaluation of therapies
-* *drawing_resolution_text*: a text to show when the preference order has been determinant for the therapy selection
+* *draw_resolution_text*: a text to show when the preference order has been determinant for the therapy selection
 * descending: an optional boolean value (true or false, yes or no) indicating a lower value indicates higher preference, false by default
 
 The order of declaration of preference orders matters: the generated algorithm will apply preference orders one after another to solve a draw until the draw is resolved in the order in which they are declared.

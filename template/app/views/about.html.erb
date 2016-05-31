@@ -1,0 +1,53 @@
+<%- if description -%>
+<div class="row marketing">
+  <p>
+    <%=description%>
+  </p>
+</div>
+<%- end -%>
+<div class="row marketing">
+  <label for="authors"> Authors: </label>
+  <ul id="authors">
+    <%- authors.each do |author| -%>
+    <li>
+      <%- if author.site -%>
+      <a href="<%= author.site %>"><%= author.name %></a>
+      <%- else -%>
+      <%= author.name %>
+      <%- end -%>
+      <%- if author.twitter -%>
+      - <a href="https://twitter.com/<%= author.twitter %>">@<%= author.twitter%></a>
+      <%- end -%>
+      <%- if author.email -%>
+      - <a href="mailto:<%= author.email %>?Subject=About%20<%= name %>"><%= author.email%></a>
+      <%- end -%>
+      <%- if author.organization -%>
+      (<%= author.organization%>)
+      <%- end -%>
+    </li>
+    <%- end -%>
+  </ul>
+  <%- unless contributors.empty? -%>
+  <label for="contributors"> Contributors: </label>
+  <ul id="contributors">
+    <%- contributors.each do |contributor| -%>
+    <li>
+      <%- if contributor.site -%>
+      <a href="<%= contributor.site %>"><%= contributor.name %></a>
+      <%- else -%>
+      <%= contributor.name %>
+      <%- end -%>
+      <%- if contributor.twitter -%>
+      - <a href="https://twitter.com/<%= contributor.twitter %>">@<%= contributor.twitter%></a>
+      <%- end -%>
+      <%- if contributor.email -%>
+      - <a href="mailto:<%= contributor.email %>?Subject=About%20<%= name %>"><%= contributor.email%></a>
+      <%- end -%>
+      <%- if contributor.organization -%>
+      (<%= contributor.organization%>)
+      <%- end -%>
+    </li>
+    <%- end -%>
+  </ul>
+  <%- end -%>
+</div>
