@@ -21,9 +21,16 @@ class Therapeutor::AppTemplate
     target_file = erb_file.gsub(/\.erb\Z/, '')
     puts "Processing #{erb_file} into #{target_file}"
     file_template = File.read(erb_file)
-    output = questionnaire.erb_render(file_template)
+    output = begin
+      questionnaire.erb_render(file_template)
+    rescue Exception => exc
+      raise ERBProcessingError, "Error while processing #{erb_file}"
+    end
     File.open(target_file, 'w'){|f| f.puts output}
     FileUtils.rm_f erb_file
+  end
+
+  class ERBProcessingError < StandardError
   end
 
 end
