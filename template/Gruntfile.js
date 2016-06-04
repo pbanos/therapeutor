@@ -342,11 +342,12 @@ module.exports = function (grunt) {
     },
 
     // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/*.html']
-      }
-    },
+    // Commented out because of performance and because nothing was being cdnified 
+    // cdnify: {
+    //   dist: {
+    //     html: ['<%= yeoman.dist %>/*.html']
+    //   }
+    // },
 
     // Copies remaining files to places other tasks can use
     copy: {
@@ -385,22 +386,23 @@ module.exports = function (grunt) {
     },
 
     // Run some tasks in parallel to speed up the build process
-    concurrent: {
-      server: [
-        'coffee:dist',
-        'copy:styles'
-      ],
-      test: [
-        'coffee',
-        'copy:styles'
-      ],
-      dist: [
-        'coffee',
-        'copy:styles',
-        'imagemin',
-        'svgmin'
-      ]
-    },
+    // Commented out because its use slowed load time sgnificantly
+    // concurrent: {
+    //   server: [
+    //     'coffee:dist',
+    //     'copy:styles'
+    //   ],
+    //   test: [
+    //     'coffee',
+    //     'copy:styles'
+    //   ],
+    //   dist: [
+    //     'coffee',
+    //     'copy:styles',
+    //     'imagemin',
+    //     'svgmin'
+    //   ]
+    // },
 
     // Test settings
     karma: {
@@ -420,7 +422,9 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
-      'concurrent:server',
+      // 'concurrent:server', // broken into sequential below to speed up time
+      'coffee:dist',
+      'copy:styles', // up to here
       'autoprefixer:server',
       'connect:livereload',
       'watch'
@@ -435,7 +439,9 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'wiredep',
-    'concurrent:test',
+    // 'concurrent:test', // broken into sequential below to speed up time
+    'coffee',
+    'copy:styles', // up to here
     'autoprefixer',
     'connect:test',
     'karma'
@@ -445,12 +451,16 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'useminPrepare',
-    'concurrent:dist',
+    // 'concurrent:dist', // broken into sequential below to speed up time
+    'coffee',
+    'copy:styles',
+    'imagemin',
+    'svgmin', // up to here
     'autoprefixer',
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
+    // 'cdnify', // removed because it is not cdnifying anything
     'cssmin',
     'uglify',
     'filerev',
