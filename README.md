@@ -351,8 +351,7 @@ Thus, to specify "a & ¬( b | c | ¬d | false | (e & f))" we would type:
 
 * Show error messages for strict validation checks on the questionnaire before rendering
 * Show warnings for non-strict validation checks on the questionnaire before rendering, such as:
-  * Variable declared but not used
+  * Variable declared but not used in conditions
+  * Variable declared but not set by questions
   * Therapy property declared but not used
-* Adapt the README for the generated app to include references to therapeutor
-* Adapt contact/about section to include author and contributor information
 * Conditional showing of sections and questions based on already answered questions
