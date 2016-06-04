@@ -1,0 +1,2422 @@
+---
+name: Migratron
+description: Migratron es un algoritmo automatizado para la elección de tratamiento
+  en la migraña vestibular.
+authors:
+- name: Dr. Emilio Domínguez Durán
+  email: emiliodominguezorl@gmail.com
+  twitter: emilienko
+contributors:
+- name: Pablo Baños López
+  email: pablo.banos.lopez@gmail.com
+  twitter: pbl86
+disclaimer: Esta herramienta ha sido desarrollada para el uso de profesionales sanitarios
+  con experiencia en el tratamiento de la migraña vestibular. Actualmente se encuentra
+  en fase beta y está siendo probada para su uso clínico. Las decisiones que se derivan
+  de su uso han de ser evaluadas por un profesional con experiencia en el tratamiento
+  de esta entidad. No nos hacemos responsables de las consecuencias que pudieran ocurrir
+  por el uso de esta aplicación.
+variables:
+- name: embarazo
+- name: lactancia
+- name: alergia_acetazolamida
+- name: alergia_amitriptilina
+- name: alergia_flunarizina
+- name: alergia_propranolol
+- name: alergia_topiramato
+- name: alergia_valproato
+- name: hipotension
+- name: bradicardia
+- name: infarto_de_miocardio
+- name: angina
+  label: Anginas de pecho de repetición
+- name: arritmia_o_bloqueo_cardiaco
+- name: arteriopata_perifrica
+- name: psoriasis
+- name: fotosensibilidad
+- name: porfiria
+- name: insuficiencia_heptica
+- name: hepatitis_aguda_o_crnica
+- name: dolor_abdominal
+- name: estrenimiento
+- name: pancreatitis
+- name: hipertiroidismo
+- name: diabetes
+- name: feocromocitoma
+- name: obesidad
+  label: Obesidad
+- name: aplasia_medular
+- name: acidosis_metablica
+- name: insuficiencia_renal
+- name: asma
+- name: epilepsia
+  label: Epilepsia
+- name: miastenia_gravis
+- name: parkinson
+- name: glaucoma
+  label: Glaucoma crónico de cualquier clase
+- name: esquizofrenia
+- name: trastorno_bipolar
+  label: Trastorno bipolar
+- name: tendencia_suicida
+- name: depresin
+  label: Depresión
+- name: anorexia
+- name: alteraciones_cognitivas
+- name: gota__hiperuricemia
+- name: lupus
+- name: hipertrofia_prosttica_o_uropata_obstructiva
+- name: clculos_urinarios
+- name: alcohol
+- name: farma_abiraterona
+  label: Abiraterona
+- name: farma_acarbosa
+  label: Acarbosa
+- name: farma_aceclofenaco
+  label: Aceclofenaco
+- name: farma_acenocumarol
+  label: Acenocumarol
+- name: farma_acetazolamida
+  label: Acetazolamida
+- name: farma_aciclovir
+  label: Aciclovir
+- name: farma_adenosina
+  label: Adenosina
+- name: farma_agomelatina
+  label: Agomelatina
+- name: farma_albiglutida
+  label: Albiglutida
+- name: farma_algeldrato
+  label: Algeldrato
+- name: farma_almasilato
+  label: Almasilato
+- name: farma_alprazolam
+  label: Alprazolam
+- name: farma_alprostadilo
+  label: Alprostadilo
+- name: farma_altizida
+  label: Altizida
+- name: farma_amiodarona
+  label: Amiodarona
+- name: farma_amitriptilina
+  label: Amitriptilina
+- name: farma_atomoxetina
+  label: Atomoxetina
+- name: farma_atropina
+  label: Atropina
+- name: farma_baclofeno
+  label: Baclofeno
+- name: farma_bambuterol
+  label: Bambuterol
+- name: farma_bendroflumetiazida
+  label: Bendroflumetiazida
+- name: farma_biperideno
+  label: Biperideno
+- name: farma_bleomicina
+  label: Bleomicina
+- name: farma_bromazepam
+  label: Bromazepam
+- name: farma_bromurodepiridostigmina
+  label: Bromuro de piridostigmina
+- name: farma_bumetanida
+  label: Bumetanida
+- name: farma_bupropin
+  label: Bupropión
+- name: farma_canaglifozina
+  label: Canaglifozina
+- name: farma_carbamazepina
+  label: Carbamazepina
+- name: farma_carbonatodecalcio
+  label: Carbonato de calcio
+- name: farma_carbonatodelitio
+  label: Carbonato de litio
+- name: farma_carbonatodemagnesio
+  label: Carbonato de magnesio
+- name: farma_celecoxib
+  label: Celecoxib
+- name: farma_ciclosporina
+  label: Ciclosporina
+- name: farma_ciproterona
+  label: Ciproterona
+- name: farma_cisplatino
+  label: Cisplatino
+- name: farma_citalopram
+  label: Citalopram
+- name: farma_clobazam
+  label: Clobazam
+- name: farma_clomipramina
+  label: Clomipramina
+- name: farma_clonacepam
+  label: Clonacepam
+- name: farma_clonidina
+  label: Clonidina
+- name: farma_clopidogrel
+  label: Clopidogrel
+- name: farma_clorazepatodipotsico
+  label: Clorazepato dipotásico
+- name: farma_clordiacepxido
+  label: Clordiacepóxido
+- name: farma_clorpromacina
+  label: Clorpromacina
+- name: farma_clortalidona
+  label: Clortalidona
+- name: farma_clorurodecalcio
+  label: Cloruro de calcio
+- name: farma_clorurodesuxametonio
+  label: Cloruro de suxametonio
+- name: farma_clotiazepam
+  label: Clotiazepam
+- name: farma_clozapina
+  label: Clozapina
+- name: farma_codena
+  label: Codeína
+- name: farma_colestipol
+  label: Colestipol
+- name: farma_colestiramina
+  label: Colestiramina
+- name: farma_dapaglifozina
+  label: Dapaglifozina
+- name: farma_dexibuprofeno
+  label: Dexibuprofeno
+- name: farma_dexketoprofeno
+  label: Dexketoprofeno
+- name: farma_diazepam
+  label: Diazepam
+- name: farma_diclofenaco
+  label: Diclofenaco
+- name: farma_digoxina
+  label: Digoxina
+- name: farma_diltiazem
+  label: Diltiazem
+- name: farma_disopiramida
+  label: Disopiramida
+- name: farma_disulfiram
+  label: Disulfiram
+- name: farma_dopamina
+  label: Dopamina
+- name: farma_doxorubicina
+  label: Doxorubicina
+- name: farma_dronedarona
+  label: Dronedarona
+- name: farma_droperidol
+  label: Droperidol
+- name: farma_empaglifozina
+  label: Empaglifozina
+- name: farma_epinefrina
+  label: Epinefrina
+- name: farma_ergotamina
+  label: Ergotamina
+- name: farma_ertapenem
+  label: Ertapenem
+- name: farma_escitalopram
+  label: Escitalopram
+- name: farma_escopolamina
+  label: Escopolamina
+- name: farma_eslicarbazepina
+  label: Eslicarbazepina
+- name: farma_estradiol
+  label: Estradiol
+- name: farma_estriol
+  label: Estriol
+- name: farma_estrgenosconjugados
+  label: Estrógenos conjugados
+- name: farma_etinilestradiol
+  label: Etinilestradiol
+- name: farma_etoricoxib
+  label: Etoricoxib
+- name: farma_etosuximida
+  label: Etosuximida
+- name: farma_exenatida
+  label: Exenatida
+- name: farma_fampridina
+  label: Fampridina
+- name: farma_fenilbutiratosdico
+  label: Fenilbutirato sódico
+- name: farma_fenilefrinanasal
+  label: Fenilefrina nasal
+- name: farma_fenitona
+  label: Fenitoína
+- name: farma_fenobarbital
+  label: Fenobarbital
+- name: farma_fentanilo
+  label: Fentanilo
+- name: farma_fingolimod
+  label: Fingolimod
+- name: farma_flecainida
+  label: Flecainida
+- name: farma_fluconazol
+  label: Fluconazol
+- name: farma_flufenacina
+  label: Flufenacina
+- name: farma_flunarizina
+  label: Flunarizina
+- name: farma_fluoxetina
+  label: Fluoxetina
+- name: farma_flurazepam
+  label: Flurazepam
+- name: farma_flurbiprofeno
+  label: Flurbiprofeno
+- name: farma_fluvoxamina
+  label: Fluvoxamina
+- name: farma_formoterol
+  label: Formoterol
+- name: farma_fosfatodecalcio
+  label: Fosfato de calcio
+- name: farma_furosemida
+  label: Furosemida
+- name: farma_galantamina
+  label: Galantamina
+- name: farma_glibenclamida
+  label: Glibenclamida
+- name: farma_gliclazida
+  label: Gliclazida
+- name: farma_glimepirida
+  label: Glimepirida
+- name: farma_glipizida
+  label: Glipizida
+- name: farma_glisentida
+  label: Glisentida
+- name: farma_gluconatodecalcio
+  label: Gluconato de calcio
+- name: farma_gomaguar
+  label: Goma guar
+- name: farma_granisetrn
+  label: Granisetrón
+- name: farma_haloperidol
+  label: Haloperidol
+- name: farma_heparina
+  label: Heparina
+- name: farma_hidralazina
+  label: Hidralazina
+- name: farma_hidroclorotiazida
+  label: Hidroclorotiazida
+- name: farma_hidrxidodemagnesio
+  label: Hidróxido de magnesio
+- name: farma_hiprico
+  label: Hipérico
+- name: farma_ibuprofeno
+  label: Ibuprofeno
+- name: farma_imatinib
+  label: Imatinib
+- name: farma_imipenem
+  label: Imipenem
+- name: farma_imipramina
+  label: Imipramina
+- name: farma_indacaterol
+  label: Indacaterol
+- name: farma_indapamida
+  label: Indapamida
+- name: farma_indometacina
+  label: Indometacina
+- name: farma_insulina
+  label: Insulina
+- name: farma_isonixina
+  label: Isonixina
+- name: farma_josamicina
+  label: Josamicina
+- name: farma_ketoprofeno
+  label: Ketoprofeno
+- name: farma_ketorolaco
+  label: Ketorolaco
+- name: farma_lactatodecalcio
+  label: Lactato de calcio
+- name: farma_lamotrigina
+  label: Lamotrigina
+- name: farma_levodopa
+  label: Levodopa
+- name: farma_levomepromazina
+  label: Levomepromazina
+- name: farma_lidocana
+  label: Lidocaína
+- name: farma_linagliptina
+  label: Linagliptina
+- name: farma_linezolid
+  label: Linezolid
+- name: farma_liraglutida
+  label: Liraglutida
+- name: farma_lisdexanfetamina
+  label: Lisdexanfetamina
+- name: farma_lixisenatida
+  label: Lixisenatida
+- name: farma_lorazepam
+  label: Lorazepam
+- name: farma_lormetazepam
+  label: Lormetazepam
+- name: farma_lornoxicam
+  label: Lornoxicam
+- name: farma_maprotilina
+  label: Maprotilina
+- name: farma_medazepam
+  label: Medazepam
+- name: farma_meloxicam
+  label: Meloxicam
+- name: farma_meropenem
+  label: Meropenem
+- name: farma_metacolina
+  label: Metacolina
+- name: farma_metadona
+  label: Metadona
+- name: farma_metformina
+  label: Metformina
+- name: farma_metildigoxina
+  label: Metildigoxina
+- name: farma_metildopa
+  label: Metildopa
+- name: farma_metotrexato
+  label: Metotrexato
+- name: farma_miglitol
+  label: Miglitol
+- name: farma_mirabegron
+  label: Mirabegron
+- name: farma_moclobemida
+  label: Moclobemida
+- name: farma_modafilino
+  label: Modafilino
+- name: farma_morfina
+  label: Morfina
+- name: farma_nabumetona
+  label: Nabumetona
+- name: farma_nafazolinanasal
+  label: Nafazolina nasal
+- name: farma_naproxeno
+  label: Naproxeno
+- name: farma_nateglinida
+  label: Nateglinida
+- name: farma_neostigmina
+  label: Neostigmina
+- name: farma_nifedipino
+  label: Nifedipino
+- name: farma_nilotinib
+  label: Nilotinib
+- name: farma_nimodipino
+  label: Nimodipino
+- name: farma_nisoldipino
+  label: Nisoldipino
+- name: farma_norepinefrina
+  label: Norepinefrina
+- name: farma_nortriptilina
+  label: Nortriptilina
+- name: farma_olodaterol
+  label: Olodaterol
+- name: farma_ondansetrn
+  label: Ondansetrón
+- name: farma_opio
+  label: Opio
+- name: farma_orlistat
+  label: Orlistat
+- name: farma_oxazepam
+  label: Oxazepam
+- name: farma_oxcarbazepina
+  label: Oxcarbazepina
+- name: farma_oxibatosdico
+  label: Oxibato sódico
+- name: farma_oximetazolinanasal
+  label: Oximetazolina nasal
+- name: farma_palonosetrn
+  label: Palonosetrón
+- name: farma_paracetamol
+  label: Paracetamol
+- name: farma_parecoxib
+  label: Parecoxib
+- name: farma_paroxetina
+  label: Paroxetina
+- name: farma_perfenazina
+  label: Perfenazina
+- name: farma_periciazina
+  label: Periciazina
+- name: farma_petidina
+  label: Petidina
+- name: farma_pidolatodecalcio
+  label: Pidolato de calcio
+- name: farma_pimozida
+  label: Pimozida
+- name: farma_pinazepam
+  label: Pinazepam
+- name: farma_pioglitazona
+  label: Pioglitazona
+- name: farma_piretanida
+  label: Piretanida
+- name: farma_piroxicam
+  label: Piroxicam
+- name: farma_pixantrona
+  label: Pixantrona
+- name: farma_prazosina
+  label: Prazosina
+- name: farma_primidona
+  label: Primidona
+- name: farma_procainamida
+  label: Procainamida
+- name: farma_prociclinida
+  label: Prociclinida
+- name: farma_promestrieno
+  label: Promestrieno
+- name: farma_propafenona
+  label: Propafenona
+- name: farma_pseudoefedrina
+  label: Pseudoefedrina
+- name: farma_ranolazina
+  label: Ranolazina
+- name: farma_rasagilina
+  label: Rasagilina
+- name: farma_repaglinida
+  label: Repaglinida
+- name: farma_rifampicina
+  label: Rifampicina
+- name: farma_ritonavir
+  label: Ritonavir
+- name: farma_rizatriptn
+  label: Rizatriptán
+- name: farma_rufinamida
+  label: Rufinamida
+- name: farma_salbutamol
+  label: Salbutamol
+- name: farma_salmeterol
+  label: Salmeterol
+- name: farma_saquinavir
+  label: Saquinavir
+- name: farma_saxagliptina
+  label: Saxagliptina
+- name: farma_selegilina
+  label: Selegilina
+- name: farma_sertralina
+  label: Sertralina
+- name: farma_sitagliptina
+  label: Sitagliptina
+- name: farma_sotalol
+  label: Sotalol
+- name: farma_sulfacrato
+  label: Sulfacrato
+- name: farma_sunitinib
+  label: Sunitinib
+- name: farma_tacrolimus
+  label: Tacrolimus
+- name: farma_tenoxicam
+  label: Tenoxicam
+- name: farma_teofilina
+  label: Teofilina
+- name: farma_terbinafina
+  label: Terbinafina
+- name: farma_terbutalina
+  label: Terbutalina
+- name: farma_timololoftlmico
+  label: Timolol oftálmico
+- name: farma_tiopentalsdico
+  label: Tiopental sódico
+- name: farma_topiramato
+  label: Topiramato
+- name: farma_torasemida
+  label: Torasemida
+- name: farma_tramazolinanasal
+  label: Tramazolina nasal
+- name: farma_tranilcipromina
+  label: Tranilcipromina
+- name: farma_triamtereno
+  label: Triamtereno
+- name: farma_triazolam
+  label: Triazolam
+- name: farma_trihexifenilo
+  label: Trihexifenilo
+- name: farma_trisilicatodemagnesio
+  label: Trisilicato de magnesio
+- name: farma_trixidodearsnico
+  label: Trióxido de arsénico
+- name: farma_valproato
+  label: Valproato
+- name: farma_valpromida
+  label: Valpromida
+- name: farma_vemurafenib
+  label: Vemurafenib
+- name: farma_verapamilo
+  label: Verapamilo
+- name: farma_vilanterol
+  label: Vilanterol
+- name: farma_vildagliptina
+  label: Vildagliptina
+- name: farma_vinblastina
+  label: Vinblastina
+- name: farma_warfarina
+  label: Warfarina
+- name: farma_xilometazolinanasal
+  label: Xilometazolina nasal
+- name: farma_xipamida
+  label: Xipamida
+- name: farma_zidovudina
+  label: Zidovudina
+- name: farma_zolpidem
+  label: Zolpidem
+- name: farma_zonisamida
+  label: Zonisamida
+- name: farma_cidoacetilsaliclico
+  label: Ácido acetilsalicílico
+- name: farma_cidoascrbico
+  label: Ácido ascórbico
+- name: farma_cidomefenmico
+  label: Ácido mefenámico
+- name: farma_cidoniflmico
+  label: Ácido niflúmico
+- name: farma_xidodemagnesio
+  label: Óxido de magnesio
+- name: ansiedad
+  label: Ansiedad con taquicardias y temblores
+- name: arritmia_cardiaca
+  label: Arritmia cardiaca suceptible de mejora con betabloqueantes
+- name: ausencias
+  label: Ausencias
+- name: dolor_neuroptico
+  label: Dolor neuropático crónico
+- name: edema
+  label: Edemas por causa medicamentosa o insuficiencia cardiaca
+- name: eneuresis_nocturna
+  label: Eneuresis nocturna sin causa orgánica
+- name: hipertensin_arterial
+  label: Hipertensión arterial
+- name: miocardiopata_hipertrfica
+  label: Miocardiopatía hipertrófica obstructiva
+- name: temblor_esencial
+  label: Temblor esencial
+- name: tics
+  label: Tics
+- name: tirotoxicosis
+  label: Tirotoxicosis
+- name: varices_esofgicas
+  label: Varices esofágicas
+sections:
+- name: Restricciones
+  questions:
+  - text: "¿Está embarazada o tiene deseo de gestación?"
+    variables:
+    - name: embarazo
+  - text: "¿Se encuentra en periodo de lactancia y no desea interrumpirla?"
+    variables:
+    - name: lactancia
+  - text: "¿Es alérgico o intolerante a acetazolamida?"
+    variables:
+    - name: alergia_acetazolamida
+  - text: "¿Es alérgico o intolerante a amitriptilina?"
+    variables:
+    - name: alergia_amitriptilina
+  - text: "¿Es alérgico o intolerante a flunarizina?"
+    variables:
+    - name: alergia_flunarizina
+  - text: "¿Es alérgico o intolerante a propranolol?"
+    variables:
+    - name: alergia_propranolol
+  - text: "¿Es alérgico o intolerante a topiramato?"
+    variables:
+    - name: alergia_topiramato
+  - text: "¿Es alérgico o intolerante a valproato?"
+    variables:
+    - name: alergia_valproato
+  - text: Hipotensión. ¿La tensión arterial sistólica del paciente es inferior a 100
+      mmHg?
+    variables:
+    - name: hipotension
+  - text: Bradicardia. ¿La frecuencia cardiaca del paciente es inferior a 50 lpm?
+    variables:
+    - name: bradicardia
+  - text: Infarto de miocardio. ¿El paciente se encuentra en el periodo de recuperación
+      tras un infarto agudo de miocardio?
+    variables:
+    - name: infarto_de_miocardio
+  - text: Angina de pecho. ¿El paciente padece de anginas de pecho?
+    variables:
+    - name: angina
+  - text: Bradiarritmia o bloqueo cardiaco. ¿El paciente padece algún tipo de bradiarritmia
+      o de bloqueo cardiaco?
+    variables:
+    - name: arritmia_o_bloqueo_cardiaco
+  - text: Arteriopatía periférica. ¿El paciente padece de claudicación intermitente,
+      enfermedad de Raynaud u otro tipo de arteriopatía periférica?
+    variables:
+    - name: arteriopata_perifrica
+  - text: Psoriasis. ¿El paciente padece de psoriasis?
+    variables:
+    - name: psoriasis
+  - text: Fotosensibilidad. ¿El paciente tiene un aumento de fotosensibilidad?
+    variables:
+    - name: fotosensibilidad
+  - text: Porfiria. ¿El paciente sufre de porfiria?
+    variables:
+    - name: porfiria
+  - text: Insuficiencia hepática. ¿El paciente sufre de insuficiencia hepática?
+    variables:
+    - name: insuficiencia_heptica
+  - text: Hepatitis aguda o crónica. ¿El paciente padece algún tipo de hepatitis?
+    variables:
+    - name: hepatitis_aguda_o_crnica
+  - text: Dolor abdominal. ¿El paciente padece dolor abdominal?
+    variables:
+    - name: dolor_abdominal
+  - text: Estreñimiento. ¿El paciente sufre de estreñimiento?
+    variables:
+    - name: estrenimiento
+  - text: Pancreatitis. ¿El paciente padece o ha padecido de pancreatitis?
+    variables:
+    - name: pancreatitis
+  - text: Hipertiroidismo. ¿El paciente padece de hipertiroidismo?
+    variables:
+    - name: hipertiroidismo
+  - text: Diabetes. ¿El paciente es diabético?
+    variables:
+    - name: diabetes
+  - text: Tumores de la glándula suprarrenal. ¿El paciente padece de feocromocitoma
+      o neuroblastoma?
+    variables:
+    - name: feocromocitoma
+  - text: Sobrepeso u obesidad. ¿El paciente tiene sobrepeso, está obeso o está preocupado
+      por ganar peso?
+    variables:
+    - name: obesidad
+  - text: Aplasia de médula ósea. ¿El paciente tiene antecedentes de aplasia de médula
+      ósea?
+    variables:
+    - name: aplasia_medular
+  - text: Acidosis metabólica. ¿El paciente padece acidosis metabólica?
+    variables:
+    - name: acidosis_metablica
+  - text: Insuficiencia renal. ¿El paciente presenta algún grado de insuficiencia
+      renal o hipoproteinemia?
+    variables:
+    - name: insuficiencia_renal
+  - text: Asma. ¿El paciente es asmático?
+    variables:
+    - name: asma
+  - text: Epilepsia. ¿El paciente es epiléptico?
+    variables:
+    - name: epilepsia
+  - text: Miastenia gravis. ¿El paciente padece de miastenia gravis?
+    variables:
+    - name: miastenia_gravis
+  - text: Enfermedad de Parkinson. ¿El paciente padece de enfermedad de Parkinson
+      o síntomas extrapiramidales parkinsonianos?
+    variables:
+    - name: parkinson
+  - text: Glaucoma crónico. ¿El paciente está diagnosticado de glaucoma crónico?
+    variables:
+    - name: glaucoma
+  - text: Psicosis. ¿El paciente padece de esquizofrenia u otro tipo de psicosis?
+    variables:
+    - name: esquizofrenia
+  - text: Trastorno bipolar. ¿El paciente padece de trastorno bipolar?
+    variables:
+    - name: trastorno_bipolar
+  - text: Tendencia suicida. ¿Existen tendencias suicidas en el paciente?
+    variables:
+    - name: tendencia_suicida
+  - text: Depresión. ¿El paciente presenta atraviesa actualmente un episodio de depresión?
+    variables:
+    - name: depresin
+  - text: Anorexia nerviosa. ¿El paciente sufre de anorexia nerviosa?
+    variables:
+    - name: anorexia
+  - text: Alteraciones cognitivas o de la conducta. ¿Se han observado en el paciente
+      alteraciones cognitivas o de la conducta?
+    variables:
+    - name: alteraciones_cognitivas
+  - text: Gota / Hiperuricemia. ¿El paciente padece de gota o de hiperuricemia?
+    variables:
+    - name: gota__hiperuricemia
+  - text: Lupus. ¿El paciente padece de lupus eritematoso sistémico?
+    variables:
+    - name: lupus
+  - text: Obstrucción urinaria. ¿El paciente padece de hipertrofia prostática u otro
+      tipo de uropatía obstructiva?
+    variables:
+    - name: hipertrofia_prosttica_o_uropata_obstructiva
+  - text: Cálculos urinarios. ¿El paciente tiene historia previa de cálculos urinarios?
+    variables:
+    - name: clculos_urinarios
+  - text: Ingesta de alcohol. ¿El paciente desea tomar alcohol durante el tratamiento?
+    variables:
+    - name: alcohol
+- name: Fármacos
+  questions:
+  - text: 'Marque los farmacos que está tomando el paciente:'
+    variables:
+    - name: farma_abiraterona
+    - name: farma_acarbosa
+    - name: farma_aceclofenaco
+    - name: farma_acenocumarol
+    - name: farma_acetazolamida
+    - name: farma_aciclovir
+    - name: farma_adenosina
+    - name: farma_agomelatina
+    - name: farma_albiglutida
+    - name: farma_algeldrato
+    - name: farma_almasilato
+    - name: farma_alprazolam
+    - name: farma_alprostadilo
+    - name: farma_altizida
+    - name: farma_amiodarona
+    - name: farma_amitriptilina
+    - name: farma_atomoxetina
+    - name: farma_atropina
+    - name: farma_baclofeno
+    - name: farma_bambuterol
+    - name: farma_bendroflumetiazida
+    - name: farma_biperideno
+    - name: farma_bleomicina
+    - name: farma_bromazepam
+    - name: farma_bromurodepiridostigmina
+    - name: farma_bumetanida
+    - name: farma_bupropin
+    - name: farma_canaglifozina
+    - name: farma_carbamazepina
+    - name: farma_carbonatodecalcio
+    - name: farma_carbonatodelitio
+    - name: farma_carbonatodemagnesio
+    - name: farma_celecoxib
+    - name: farma_ciclosporina
+    - name: farma_ciproterona
+    - name: farma_cisplatino
+    - name: farma_citalopram
+    - name: farma_clobazam
+    - name: farma_clomipramina
+    - name: farma_clonacepam
+    - name: farma_clonidina
+    - name: farma_clopidogrel
+    - name: farma_clorazepatodipotsico
+    - name: farma_clordiacepxido
+    - name: farma_clorpromacina
+    - name: farma_clortalidona
+    - name: farma_clorurodecalcio
+    - name: farma_clorurodesuxametonio
+    - name: farma_clotiazepam
+    - name: farma_clozapina
+    - name: farma_codena
+    - name: farma_colestipol
+    - name: farma_colestiramina
+    - name: farma_dapaglifozina
+    - name: farma_dexibuprofeno
+    - name: farma_dexketoprofeno
+    - name: farma_diazepam
+    - name: farma_diclofenaco
+    - name: farma_digoxina
+    - name: farma_diltiazem
+    - name: farma_disopiramida
+    - name: farma_disulfiram
+    - name: farma_dopamina
+    - name: farma_doxorubicina
+    - name: farma_dronedarona
+    - name: farma_droperidol
+    - name: farma_empaglifozina
+    - name: farma_epinefrina
+    - name: farma_ergotamina
+    - name: farma_ertapenem
+    - name: farma_escitalopram
+    - name: farma_escopolamina
+    - name: farma_eslicarbazepina
+    - name: farma_estradiol
+    - name: farma_estriol
+    - name: farma_estrgenosconjugados
+    - name: farma_etinilestradiol
+    - name: farma_etoricoxib
+    - name: farma_etosuximida
+    - name: farma_exenatida
+    - name: farma_fampridina
+    - name: farma_fenilbutiratosdico
+    - name: farma_fenilefrinanasal
+    - name: farma_fenitona
+    - name: farma_fenobarbital
+    - name: farma_fentanilo
+    - name: farma_fingolimod
+    - name: farma_flecainida
+    - name: farma_fluconazol
+    - name: farma_flufenacina
+    - name: farma_flunarizina
+    - name: farma_fluoxetina
+    - name: farma_flurazepam
+    - name: farma_flurbiprofeno
+    - name: farma_fluvoxamina
+    - name: farma_formoterol
+    - name: farma_fosfatodecalcio
+    - name: farma_furosemida
+    - name: farma_galantamina
+    - name: farma_glibenclamida
+    - name: farma_gliclazida
+    - name: farma_glimepirida
+    - name: farma_glipizida
+    - name: farma_glisentida
+    - name: farma_gluconatodecalcio
+    - name: farma_gomaguar
+    - name: farma_granisetrn
+    - name: farma_haloperidol
+    - name: farma_heparina
+    - name: farma_hidralazina
+    - name: farma_hidroclorotiazida
+    - name: farma_hidrxidodemagnesio
+    - name: farma_hiprico
+    - name: farma_ibuprofeno
+    - name: farma_imatinib
+    - name: farma_imipenem
+    - name: farma_imipramina
+    - name: farma_indacaterol
+    - name: farma_indapamida
+    - name: farma_indometacina
+    - name: farma_insulina
+    - name: farma_isonixina
+    - name: farma_josamicina
+    - name: farma_ketoprofeno
+    - name: farma_ketorolaco
+    - name: farma_lactatodecalcio
+    - name: farma_lamotrigina
+    - name: farma_levodopa
+    - name: farma_levomepromazina
+    - name: farma_lidocana
+    - name: farma_linagliptina
+    - name: farma_linezolid
+    - name: farma_liraglutida
+    - name: farma_lisdexanfetamina
+    - name: farma_lixisenatida
+    - name: farma_lorazepam
+    - name: farma_lormetazepam
+    - name: farma_lornoxicam
+    - name: farma_maprotilina
+    - name: farma_medazepam
+    - name: farma_meloxicam
+    - name: farma_meropenem
+    - name: farma_metacolina
+    - name: farma_metadona
+    - name: farma_metformina
+    - name: farma_metildigoxina
+    - name: farma_metildopa
+    - name: farma_metotrexato
+    - name: farma_miglitol
+    - name: farma_mirabegron
+    - name: farma_moclobemida
+    - name: farma_modafilino
+    - name: farma_morfina
+    - name: farma_nabumetona
+    - name: farma_nafazolinanasal
+    - name: farma_naproxeno
+    - name: farma_nateglinida
+    - name: farma_neostigmina
+    - name: farma_nifedipino
+    - name: farma_nilotinib
+    - name: farma_nimodipino
+    - name: farma_nisoldipino
+    - name: farma_norepinefrina
+    - name: farma_nortriptilina
+    - name: farma_olodaterol
+    - name: farma_ondansetrn
+    - name: farma_opio
+    - name: farma_orlistat
+    - name: farma_oxazepam
+    - name: farma_oxcarbazepina
+    - name: farma_oxibatosdico
+    - name: farma_oximetazolinanasal
+    - name: farma_palonosetrn
+    - name: farma_paracetamol
+    - name: farma_parecoxib
+    - name: farma_paroxetina
+    - name: farma_perfenazina
+    - name: farma_periciazina
+    - name: farma_petidina
+    - name: farma_pidolatodecalcio
+    - name: farma_pimozida
+    - name: farma_pinazepam
+    - name: farma_pioglitazona
+    - name: farma_piretanida
+    - name: farma_piroxicam
+    - name: farma_pixantrona
+    - name: farma_prazosina
+    - name: farma_primidona
+    - name: farma_procainamida
+    - name: farma_prociclinida
+    - name: farma_promestrieno
+    - name: farma_propafenona
+    - name: farma_pseudoefedrina
+    - name: farma_ranolazina
+    - name: farma_rasagilina
+    - name: farma_repaglinida
+    - name: farma_rifampicina
+    - name: farma_ritonavir
+    - name: farma_rizatriptn
+    - name: farma_rufinamida
+    - name: farma_salbutamol
+    - name: farma_salmeterol
+    - name: farma_saquinavir
+    - name: farma_saxagliptina
+    - name: farma_selegilina
+    - name: farma_sertralina
+    - name: farma_sitagliptina
+    - name: farma_sotalol
+    - name: farma_sulfacrato
+    - name: farma_sunitinib
+    - name: farma_tacrolimus
+    - name: farma_tenoxicam
+    - name: farma_teofilina
+    - name: farma_terbinafina
+    - name: farma_terbutalina
+    - name: farma_timololoftlmico
+    - name: farma_tiopentalsdico
+    - name: farma_topiramato
+    - name: farma_torasemida
+    - name: farma_tramazolinanasal
+    - name: farma_tranilcipromina
+    - name: farma_triamtereno
+    - name: farma_triazolam
+    - name: farma_trihexifenilo
+    - name: farma_trisilicatodemagnesio
+    - name: farma_trixidodearsnico
+    - name: farma_valproato
+    - name: farma_valpromida
+    - name: farma_vemurafenib
+    - name: farma_verapamilo
+    - name: farma_vilanterol
+    - name: farma_vildagliptina
+    - name: farma_vinblastina
+    - name: farma_warfarina
+    - name: farma_xilometazolinanasal
+    - name: farma_xipamida
+    - name: farma_zidovudina
+    - name: farma_zolpidem
+    - name: farma_zonisamida
+    - name: farma_cidoacetilsaliclico
+    - name: farma_cidoascrbico
+    - name: farma_cidomefenmico
+    - name: farma_cidoniflmico
+    - name: farma_xidodemagnesio
+- name: Condiciones concomitantes
+  questions:
+  - text: 'Marque otras condiciones a tratar del paciente:'
+    variables:
+    - name: angina
+    - name: ansiedad
+    - name: arritmia_cardiaca
+    - name: ausencias
+    - name: depresin
+    - name: dolor_neuroptico
+    - name: edema
+    - name: eneuresis_nocturna
+    - name: epilepsia
+    - name: glaucoma
+    - name: hipertensin_arterial
+    - name: miocardiopata_hipertrfica
+    - name: obesidad
+    - name: temblor_esencial
+    - name: tics
+    - name: tirotoxicosis
+    - name: trastorno_bipolar
+    - name: varices_esofgicas
+recommendation_levels:
+- name: forbidden
+  label: Terminantemente prohibida
+  description: 'Este fármaco no debe administrarse al paciente por las siguientes
+    razones:'
+  color: red
+  banning: true
+- name: notRecommended
+  label: No recomendado
+  description: 'La administración de este farmáco al paciente puede ocasionar las
+    siguientes complicaciones:'
+  color: yellow
+- name: recommended
+  label: Recomendado
+  description: No hay contraindicaciones para la administración de este fármaco al
+    paciente.
+  color: green
+  banning: false
+preference_orders:
+- type: dynamic
+  name: concomitantConditions
+  label: Condiciones concomitantes
+  text: 'Sirve para tratar las siguientes conditiones concomitantes:'
+  draw_resolution_text: La terapia recomendada ha sido priorizada sobre otras por
+    el número de conditiones concomitantes en el paciente que trata
+- type: static
+  name: price
+  label: Precio
+  draw_resolution_text: La terapia recomendada ha sido priorizada sobre otras por
+    su precio
+  descending: true
+therapies:
+- name: acetazolamida
+  label: Acetazolamida
+  description:
+  properties:
+    price: 1
+  level_conditions:
+    recommended: []
+    notRecommended:
+    - text: Debe realizarse un especial control clínico en pacientes con insuficiencia
+        hepática.
+      condition:
+        variable: insuficiencia_heptica
+    - text: Precisa especial control clínico en pacientes con diabetes.
+      condition:
+        variable: diabetes
+    - text: Precisa especial control clínico en pacientes con insuficiencia renal.
+      condition:
+        variable: insuficiencia_renal
+    - text: Precisa especial control clínico en pacientes con gota o hiperuricemia.
+      condition:
+        variable: gota__hiperuricemia
+    - text: Precisa especial control clínico en pacientes con historia previa de cálculos
+        urinarios.
+      condition:
+        variable: clculos_urinarios
+    - text: Posible acumulación orgánica de carbamazepina.
+      condition:
+        variable: farma_carbamazepina
+    - text: Posible acumulación orgánica de eslicarbazepina.
+      condition:
+        variable: farma_eslicarbazepina
+    - text: Puede potenciar la osteomalacia inducida por el empleo crónico de fenitoína.
+      condition:
+        variable: farma_fenitona
+    - text: Puede potenciar la osteomalacia inducida por el empleo crónico de fenobarbital.
+      condition:
+        variable: farma_fenobarbital
+    - text: Puede potenciar la osteomalacia inducida por el empleo crónico de primidona.
+      condition:
+        variable: farma_primidona
+    - text: Posible acumulación orgánica de pseudoefedrina, pudiendo conducir a efectos
+        tóxicos.
+      condition:
+        variable: farma_pseudoefedrina
+    - text: Posible potenciación de la toxicidad de timolol.
+      condition:
+        variable: farma_timololoftlmico
+    forbidden:
+    - text: Embarazo o deseo de gestación (categoría C de la FDA).
+      condition:
+        variable: embarazo
+    - text: Alergia o intolerancia al fármaco.
+      condition:
+        variable: alergia_acetazolamida
+    - text: Contraindicada en casos de acidosis metabólica hiperclorémica.
+      condition:
+        variable: acidosis_metablica
+    - text: Contraindicada en caso de depresión.
+      condition:
+        variable: depresin
+    - text: Posible aumento de los niveles plasmáticos de acetazolamida con AAS. Riesgo
+        de manifestaciones neurotóxicas.
+      condition:
+        variable: farma_cidoacetilsaliclico
+    - text: Posible aumento de los niveles plasmáticos de ciclosporina, con riesgo
+        de nefrotoxicidad y neurotoxicidad.
+      condition:
+        variable: farma_ciclosporina
+    - text: Posible aumento de la toxicidad digitálica por hipokaliemia.
+      condition:
+        variable: farma_digoxina
+    - text: Posible potenciación de los efectos anfetamínicos de lisdexanfetamina,
+        pudiendo contribuir a la aparición de psicosis tóxica.
+      condition:
+        variable: farma_lisdexanfetamina
+    - text: Posible reducción de los niveles sanguíneos de litio.
+      condition:
+        variable: farma_carbonatodelitio
+    - text: Posible aumento de la toxicidad digitálica por hipokaliemia.
+      condition:
+        variable: farma_metildigoxina
+    - text: Posible mayor incidencia de nefrolitiasis de topiramato.
+      condition:
+        variable: farma_topiramato
+    - text: Posible mayor incidencia de nefrolitiasis de zonisamida.
+      condition:
+        variable: farma_zonisamida
+  order_conditions:
+    concomitantConditions:
+    - text: Edemas por causa medicamentosa o insuficiencia cardiaca.
+      condition:
+        variable: edema
+    - text: Epilepsia.
+      condition:
+        variable: epilepsia
+    - text: Glaucoma crónico de cualquier clase.
+      condition:
+        variable: glaucoma
+- name: amitriptilina
+  label: Amitriptilina
+  description:
+  properties:
+    price: 1
+  level_conditions:
+    recommended: []
+    notRecommended:
+    - text: Puede desencadenar un infarto de miocardio, especialmente en pacientes
+        con angina de pecho.
+      condition:
+        variable: angina
+    - text: Ha provocado arritmias, taquicardia sinusal y prolongación del tiempo
+        de conducción y del intervalo QT, especialmente cuando se administra a dosis
+        altas.
+      condition:
+        variable: arritmia_o_bloqueo_cardiaco
+    - text: Dado que se metaboliza principalmente en el hígado, deberá ajustarse la
+        posología al grado funcional hepático.
+      condition:
+        variable: insuficiencia_heptica
+    - text: En casos de hipertiroidismo, tiene riesgo de toxicidad cardiovascular.
+      condition:
+        variable: hipertiroidismo
+    - text: Puede disminuir el umbral convulsivo en epilépticos.
+      condition:
+        variable: epilepsia
+    - text: Puede aumentar la presión intraocular.
+      condition:
+        variable: glaucoma
+    - text: Puede aumentar el número de alteraciones psicóticas y los delirios paranoides
+        pueden agravarse.
+      condition:
+        variable: esquizofrenia
+    - text: En caso de psicosis maniacodepresiva, los pacientes deprimidos pueden
+        experimentar un cambio a la fase maniaca.
+      condition:
+        variable: trastorno_bipolar
+    - text: El riesgo de suicidio puede aumentar en los primeros estadíos de la recuperación.
+      condition:
+        variable: tendencia_suicida
+    - text: El efecto anticolinérgico puede causar agravamiento de cualquier enfermedad
+        que produzca retención urinaria.
+      condition:
+        variable: hipertrofia_prosttica_o_uropata_obstructiva
+    - text: Puede causar íleo paralítico, por lo que se debe tener cuidado en pacientes
+        con estreñimiento crónico.
+      condition:
+        variable: estrenimiento
+    - text: No es aconsejable en pacientes que deseen una exposición prolongada al
+        sol.
+      condition:
+        variable: fotosensibilidad
+    - text: Puede desencadenar crisis hipertensivas en pacientes con feocromocitoma
+        o neuroblastoma.
+      condition:
+        variable: feocromocitoma
+    - text: Posible incremento de la toxicidad cardiaca por uso simultáneo de altizida.
+      condition:
+        variable: farma_altizida
+    - text: Posible potenciación de los efectos antiespásticos de baclofeno.
+      condition:
+        variable: farma_baclofeno
+    - text: Posible incremento de la toxicidad cardiaca por uso simultáneo de bendroflumetiazida.
+      condition:
+        variable: farma_bendroflumetiazida
+    - text: Posible potenciación del efecto anticolinérgico por uso de biperideno.
+      condition:
+        variable: farma_biperideno
+    - text: Posible incremento de la toxicidad cardiaca por uso simultáneo de bumetanida.
+      condition:
+        variable: farma_bumetanida
+    - text: Posible acumulación de amitriptilina por uso simultáneo de bupropión.
+      condition:
+        variable: farma_bupropin
+    - text: Posible acumulación de amitriptilina por uso simultáneo de citalopram.
+      condition:
+        variable: farma_citalopram
+    - text: Posible incremento de la toxicidad cardiaca por uso simultáneo de clortalidona.
+      condition:
+        variable: farma_clortalidona
+    - text: Posible potenciación del deterioro de la alerta mental por uso simultáneo
+        de diazepam.
+      condition:
+        variable: farma_diazepam
+    - text: Posible acumulación de amitriptilina por uso simultáneo de disulfiram.
+      condition:
+        variable: farma_disulfiram
+    - text: Posible potenciación del efecto anticolinérgico por uso de escopolamina.
+      condition:
+        variable: farma_escopolamina
+    - text: Posible acumulación de amitriptilina por uso simultáneo de estradiol.
+      condition:
+        variable: farma_estradiol
+    - text: Posible acumulación de amitriptilina por uso simultáneo de estriol.
+      condition:
+        variable: farma_estriol
+    - text: Posible acumulación de amitriptilina por uso simultáneo de etinilestradiol.
+      condition:
+        variable: farma_etinilestradiol
+    - text: Posible acumulación de amitriptilina por uso simultáneo de fluconazol.
+      condition:
+        variable: farma_fluconazol
+    - text: Posible potenciación de la toxicidad cardiaca por uso simultáneo de furosemida.
+      condition:
+        variable: farma_furosemida
+    - text: Posible aparición de arritmias cardiacas por uso de granisetrón.
+      condition:
+        variable: farma_granisetrn
+    - text: Posible potenciación de la toxicidad cardiaca por uso simultáneo de hidroclorotiazida.
+      condition:
+        variable: farma_hidroclorotiazida
+    - text: Posible reducción del nivel plasmático de amitriptilina por la toma de
+        hipérico.
+      condition:
+        variable: farma_hiprico
+    - text: Posible incremento de la toxicidad cardiaca por uso simultáneo de indapamida.
+      condition:
+        variable: farma_indapamida
+    - text: Posible acumulación de amitriptilina por uso simultáneo de josamicina.
+      condition:
+        variable: farma_josamicina
+    - text: Posible aparición de crisis hipertensivas por uso simultáneo de levodopa.
+      condition:
+        variable: farma_levodopa
+    - text: Posible acumulación orgánica de morfina.
+      condition:
+        variable: farma_morfina
+    - text: Posible aparición de arritmias cardiacas por uso de ondansetrón.
+      condition:
+        variable: farma_ondansetrn
+    - text: Posible aparición de arritmias cardiacas por uso de palonosetrón.
+      condition:
+        variable: farma_palonosetrn
+    - text: Posible incremento de la toxicidad cardiaca por uso simultáneo de piretanida.
+      condition:
+        variable: farma_piretanida
+    - text: Posible potenciación del efecto anticolinércigo por uso simultáneo de
+        prociclinida.
+      condition:
+        variable: farma_prociclinida
+    - text: Posible acumulación orgánica de amitriptilina por uso simultáneo de sertralina.
+      condition:
+        variable: farma_sertralina
+    - text: Posible reducción de los niveles de amitriptilina por uso simultáneo de
+        sulfacrato.
+      condition:
+        variable: farma_sulfacrato
+    - text: Posible potenciación del efecto anticolinérgico por uso simultáneo de
+        terbinafina.
+      condition:
+        variable: farma_terbinafina
+    - text: Posible potenciación de la toxicidad cardiaca por uso simultáneo de torasemida.
+      condition:
+        variable: farma_torasemida
+    - text: Posible potenciación del efecto anticolinércigo por uso simultáneo de
+        trihexifenilo.
+      condition:
+        variable: farma_trihexifenilo
+    - text: Posible incremento de la toxicidad cardiaca por uso simultáneo de xipamida.
+      condition:
+        variable: farma_xipamida
+    - text: Posible acumulación orgánica de amitriptilina por uso simultáneo de escitalopram.
+      condition:
+        variable: farma_escitalopram
+    - text: Posible potenciación de los efectos cardiovasculares en caso de absorción
+        sistémica de fenilefrina.
+      condition:
+        variable: farma_fenilefrinanasal
+    - text: Posible acción sobre el intervalo QT en caso de uso simultáneo de formoterol.
+      condition:
+        variable: farma_formoterol
+    - text: Posible aparición de crisis hipertensivas por uso simultáneo de metildopa.
+      condition:
+        variable: farma_metildopa
+    - text: Posible aumento de las concentraciones plasámticas de los sustratos del
+        CYP2D6 por uso de mirabegron.
+      condition:
+        variable: farma_mirabegron
+    - text: Posible potenciación de los efectos cardiovasculares en caso de absorción
+        sistémica de nafazolina.
+      condition:
+        variable: farma_nafazolinanasal
+    - text: Posible potenciación de los efectos cardiovasculares en caso de absorción
+        sistémica de oximetazolina.
+      condition:
+        variable: farma_oximetazolinanasal
+    - text: Posible acción sobre el intervalo QT en caso de uso simultáneo de nilotinib.
+      condition:
+        variable: farma_nilotinib
+    - text: Posible acumulación orgánica de amitriptilina por uso simultáneo de paroxetina.
+      condition:
+        variable: farma_paroxetina
+    - text: Posible acumulación orgánica de amitriptilina por uso simultáneo de ritonavir.
+      condition:
+        variable: farma_ritonavir
+    - text: Posible potenciación de los efectos cardiovasculares en caso de absorción
+        sistémica de tramazolina.
+      condition:
+        variable: farma_tramazolinanasal
+    - text: Posible potenciación de los efectos cardiovasculares en caso de absorción
+        sistémica de xilometazolina.
+      condition:
+        variable: farma_xilometazolinanasal
+    - text: Posible acumulación del antidepresivo en el organismo por uso de estrógenos.
+      condition:
+        variable: farma_estrgenosconjugados
+    forbidden:
+    - text: Embarazo o deseo de gestación (categoría C de la FDA).
+      condition:
+        variable: embarazo
+    - text: Alergia o intolerancia al fármaco.
+      condition:
+        variable: alergia_amitriptilina
+    - text: Aumenta el riesgo de sufrir un bloqueo cardiaco en el periodo de recuperación
+        de un infarto de miocardio.
+      condition:
+        variable: infarto_de_miocardio
+    - text: El paciente desea tomar bebidas alcohólicas durante el tratamiento.
+      condition:
+        variable: alcohol
+    - text: La administración junto con adenosina puede dar lugar a arritmias cardiacas
+        graves.
+      condition:
+        variable: farma_adenosina
+    - text: La administración conjunta de arsénico puede prolongar el intervalo QT.
+      condition:
+        variable: farma_trixidodearsnico
+    - text: La administración conjunta de atomoxetina puede dar lugar a arritmias
+        cardiacas graves.
+      condition:
+        variable: farma_atomoxetina
+    - text: Posible potenciación del efecto anticolinérgico de atropina.
+      condition:
+        variable: farma_atropina
+    - text: Posible disminución del efecto de amitriptilina por carbamazepina.
+      condition:
+        variable: farma_carbamazepina
+    - text: Los antidepresivos tricíclicos pueden antagonizar la acción de clonidina.
+      condition:
+        variable: farma_clonidina
+    - text: Posible sobreestimulación del SNC, con aparición de temblores o arritmias
+        cardiacas por clorpromacina.
+      condition:
+        variable: farma_clorpromacina
+    - text: Posible sobreestimulación del SNC, con aparición de temblores o arritmias
+        cardiacas por clozapina.
+      condition:
+        variable: farma_clozapina
+    - text: Posible sobreestimulación del SNC, con aparición de temblores o arritmias
+        cardiacas por droperidol.
+      condition:
+        variable: farma_droperidol
+    - text: Posible potenciación de los efectos cardiovasculares por epinefrina.
+      condition:
+        variable: farma_epinefrina
+    - text: Posible disminución del efecto de amitriptilina por eslicarbazepina.
+      condition:
+        variable: farma_eslicarbazepina
+    - text: Posible potenciación de los efectos cardiovasculares por epinefrina.
+      condition:
+        variable: farma_epinefrina
+    - text: Posible potenciación de los efectos cardiovasculares por fenilefrina nasal.
+      condition:
+        variable: farma_fenilefrinanasal
+    - text: Posible disminución del efecto de amitriptilina por fenobarbital.
+      condition:
+        variable: farma_fenobarbital
+    - text: Posible aparición de temblores y arritmias cardiacas por uso simultáneo
+        de flufenacina.
+      condition:
+        variable: farma_flufenacina
+    - text: Posible acumulación de amitriptilina por uso simultáneo de fluoxetina.
+      condition:
+        variable: farma_fluoxetina
+    - text: Posible acumulación de amitriptilina por uso simultáneo con fluvoxamina.
+      condition:
+        variable: farma_fluvoxamina
+    - text: Posible aparición de temblores y arritmias cardiacas por uso simultáneo
+        de haloperidol.
+      condition:
+        variable: farma_haloperidol
+    - text: Posible aparición de temblores y arritmias cardiacas por uso simultáneo
+        de levomepromazina.
+      condition:
+        variable: farma_levomepromazina
+    - text: Posible aparición de síndrome serotoninérgico por uso de linezolid.
+      condition:
+        variable: farma_linezolid
+    - text: Posible aparición de neurotoxicidad, síndrome serotoninérgico o síndrome
+        neuroléptico maligno por uso simultáneo de litio.
+      condition:
+        variable: farma_carbonatodelitio
+    - text: Posible aparición de síndrome serotoninérgico por uso simultáneo de moclobemida.
+      condition:
+        variable: farma_moclobemida
+    - text: Posible potenciación de los efectos cardiovasculares de norepinefrina.
+      condition:
+        variable: farma_norepinefrina
+    - text: Posible aparición de temblores y arritmias cardiacas por uso simultáneo
+        de perfenazina.
+      condition:
+        variable: farma_perfenazina
+    - text: Posible aparición de temblores y arritmias cardiacas por uso simultáneo
+        de periciazina.
+      condition:
+        variable: farma_periciazina
+    - text: Posible prolongación del intervalo QT por uso simultáneo de pimozida.
+      condition:
+        variable: farma_pimozida
+    - text: Posible aparición de síndrome serotoninérgico por uso simultáneo de rasagilina.
+      condition:
+        variable: farma_rasagilina
+    - text: Posible acumulación de amitriptilina por saquinavir.
+      condition:
+        variable: farma_saquinavir
+    - text: Posible aparición de síndrome serotoninérgico por uso simultáneo de selegilina.
+      condition:
+        variable: farma_selegilina
+    - text: Posible prolongación del intervalo QT por uso simultáneo de sotalol.
+      condition:
+        variable: farma_sotalol
+    - text: Posible prolongación del intervalo QT por uso simultáneo de sunitinib.
+      condition:
+        variable: farma_sunitinib
+    - text: Posible prolongación del intervalo QT por uso simultáneo de tacrolimus.
+      condition:
+        variable: farma_tacrolimus
+    - text: Posible aparición de síndrome serotoninérgico por uso simultáneo de tranilcipromina.
+      condition:
+        variable: farma_tranilcipromina
+    - text: Posible acumulación de amitriptilina por uso simultáneo de valproato.
+      condition:
+        variable: farma_valproato
+    - text: Posible acumulación de amitriptilina por uso simultáneo de valpromida.
+      condition:
+        variable: farma_valpromida
+  order_conditions:
+    concomitantConditions:
+    - text: Depresión.
+      condition:
+        variable: depresin
+    - text: Eneuresis nocturna sin causa orgánica.
+      condition:
+        variable: eneuresis_nocturna
+    - text: Dolor neuropático crónico.
+      condition:
+        variable: dolor_neuroptico
+- name: flunarizina
+  label: Flunarizina
+  description:
+  properties:
+    price: 1
+  level_conditions:
+    recommended: []
+    notRecommended:
+    - text: Puede ocasionar aumento de peso.
+      condition:
+        variable: obesidad
+    - text: Dado que se metaboliza principalmente en el hígado, deberá ajustarse la
+        posología al grado funcional hepático.
+      condition:
+        variable: insuficiencia_heptica
+    - text: Posible pérdida de eficacia de flunarizina por uso simultáneo de carbamazepina.
+      condition:
+        variable: farma_carbamazepina
+    - text: Aumento del riesgo de galactorrea por uso simultáneo de ciproterona.
+      condition:
+        variable: farma_ciproterona
+    - text: Posible pérdida de eficacia de flunarizina por uso simultáneo de eslicarbazepina.
+      condition:
+        variable: farma_eslicarbazepina
+    - text: Posible pérdida de eficacia de flunarizina por uso simultáneo de fenitoína.
+      condition:
+        variable: farma_fenitona
+    - text: Posible pérdida de eficacia de flunarizina por uso simultáneo de valproato.
+      condition:
+        variable: farma_valproato
+    forbidden:
+    - text: Embarazo o deseo de gestación (categoría C de la FDA).
+      condition:
+        variable: embarazo
+    - text: En caso de lactancia, tiene efecto sedante sobre el niño.
+      condition:
+        variable: lactancia
+    - text: Alergia o intolerancia al fármaco.
+      condition:
+        variable: alergia_flunarizina
+    - text: Puede producir síntomas extrapiramidales parkinsonianos durante tratamientos
+        prolongados, especialmente en ancianos.
+      condition:
+        variable: parkinson
+    - text: No se aconseja el uso en caso de depresión. Puede precipitar, además,
+        la aparición de depresión.
+      condition:
+        variable: depresin
+    - text: El paciente desea tomar bebidas alcohólicas durante el tratamiento.
+      condition:
+        variable: alcohol
+    - text: Aumento del riesgo de galactorrea por uso simultáneo de etinilestradiol.
+      condition:
+        variable: farma_etinilestradiol
+  order_conditions:
+    concomitantConditions: []
+- name: propranolol
+  label: Propranolol
+  description:
+  properties:
+    price: 1
+  level_conditions:
+    recommended: []
+    notRecommended:
+    - text: Puede disminuir la circulación periférica.
+      condition:
+        variable: arteriopata_perifrica
+    - text: Puede exacerbar la psoriasis.
+      condition:
+        variable: psoriasis
+    - text: Iniciar el tratamiento con dosis bajas. En hipertensión portal, la función
+        hepática puede deteriorarse y desarrollarse encefalopatía hepática.
+      condition:
+        variable: insuficiencia_heptica
+    - text: El bloqueo betaadrenérgico tiende a revertir con rapidez los síntomas
+        de hipertiroidismo.
+      condition:
+        variable: hipertiroidismo
+    - text: Puede enmascarar los síntomas de una crisis de hipoglucemia.
+      condition:
+        variable: diabetes
+    - text: Se excreta mayoritariamente por vía renal; debe ajustarse la dosis de
+        acuerdo al grado funcional renal.
+      condition:
+        variable: insuficiencia_renal
+    - text: Puede potenciar un estado miasténico, visión doble y debilidad muscular.
+      condition:
+        variable: miastenia_gravis
+    - text: La asociación de betabloqueantes con depresión no ha sido totalmente establecida,
+        pero se recomienda precaución en estos pacientes.
+      condition:
+        variable: depresin
+    - text: Existe riesgo de hipertensión en caso de feocromocitoma si no se alcanza
+        antes un bloqueo alfaadrenérgico eficaz.
+      condition:
+        variable: feocromocitoma
+    - text: Posible aumento de las concentraciones plasmáticas del sustrato del CYP2D6
+        por abiraterona.
+      condition:
+        variable: farma_abiraterona
+    - text: Posible reducción del efecto antihipertensivo por aceclofenaco.
+      condition:
+        variable: farma_aceclofenaco
+    - text: Posible potenciación del efecto anticoagulante de acenocumarol.
+      condition:
+        variable: farma_acenocumarol
+    - text: Posible reducción del efecto antihipertensivo por uso de ácido acetilsalicílico.
+      condition:
+        variable: farma_cidoacetilsaliclico
+    - text: Posible aparición de bradicardia, asistolia o fibrilación ventricular
+        por uso de amiodarona.
+      condition:
+        variable: farma_amiodarona
+    - text: Posible reducción de los niveles de propranolol por ácido ascórbico.
+      condition:
+        variable: farma_cidoascrbico
+    - text: Posible reducción del efecto antihipertensivo por celecoxib.
+      condition:
+        variable: farma_celecoxib
+    - text: Posible reducción de la absorción del betabloqueante por colestipol.
+      condition:
+        variable: farma_colestipol
+    - text: Posible reducción de la absorción del betabloqueante por colestiramina.
+      condition:
+        variable: farma_colestiramina
+    - text: Posible reducción del efecto antihipertensivo por dexibuprofeno.
+      condition:
+        variable: farma_dexibuprofeno
+    - text: Posible reducción del efecto antihipertensivo por dexketoprofeno.
+      condition:
+        variable: farma_dexketoprofeno
+    - text: Posible potenciación del efecto de benzodiacepinas.
+      condition:
+        variable: farma_diazepam
+    - text: Posible reducción del efecto antihipertensivo por uso de diclofenaco.
+      condition:
+        variable: farma_diclofenaco
+    - text: Puede darse una importante depresión miocárdica por diltiazem.
+      condition:
+        variable: farma_diltiazem
+    - text: Posible riesgo de bradicardia por dronedarona.
+      condition:
+        variable: farma_dronedarona
+    - text: Posible potenciación de efectos vasoconstrictores de la ergotamina.
+      condition:
+        variable: farma_ergotamina
+    - text: Posible acumulación del betabloqueante por uso de estrógenos.
+      condition:
+        variable: farma_estradiol
+    - text: Posible acumulación del betabloqueante por uso de estrógenos.
+      condition:
+        variable: farma_estriol
+    - text: Posible acumulación del betabloqueante por uso de estrógenos.
+      condition:
+        variable: farma_estrgenosconjugados
+    - text: Posible acumulación del betabloqueante por uso de estrógenos.
+      condition:
+        variable: farma_etinilestradiol
+    - text: Posible reducción del efecto antihipertensivo por uso de etoricoxib.
+      condition:
+        variable: farma_etoricoxib
+    - text: Peligro de crisis hipertensiva por uso de fenobarbital.
+      condition:
+        variable: farma_fenobarbital
+    - text: Posible acumulación de fármacos y efectos tóxicos por uso de flecainida.
+      condition:
+        variable: farma_flecainida
+    - text: Posible reducción del efecto antihipertensivo por uso de flurbiprofeno.
+      condition:
+        variable: farma_flurbiprofeno
+    - text: Posible acumulación de fármacos y efectos tóxicos de fluvoxamina.
+      condition:
+        variable: farma_fluvoxamina
+    - text: Posible aumento de la fracción libre del betabloqueante por uso de heparina.
+      condition:
+        variable: farma_heparina
+    - text: Posible aumento de la biodisponibilidad oral de los betabloqueantes por
+        uso de hidralazina.
+      condition:
+        variable: farma_hidralazina
+    - text: Posible reducción del efecto antihipertensivo por uso de ibuprofeno.
+      condition:
+        variable: farma_ibuprofeno
+    - text: Posible acumulación orgánica del antidepresivo por uso de imipramina.
+      condition:
+        variable: farma_imipramina
+    - text: Posible reducción del efecto antihipertensivo por uso de indometacina.
+      condition:
+        variable: farma_indometacina
+    - text: Posible reducción del efecto antihipertensivo por uso de isonixina.
+      condition:
+        variable: farma_isonixina
+    - text: Posible reducción del efecto antihipertensivo por uso de ketoprofeno.
+      condition:
+        variable: farma_ketoprofeno
+    - text: Posible reducción del efecto antihipertensivo por uso de ketorolaco.
+      condition:
+        variable: farma_ketorolaco
+    - text: Posible reducción del efecto antihipertensivo por lornoxicam.
+      condition:
+        variable: farma_lornoxicam
+    - text: Posible acumulación orgánica del antidepresivo por maprotilina.
+      condition:
+        variable: farma_maprotilina
+    - text: Posible reducción del efecto antihipertensivo por ácido mefenámico.
+      condition:
+        variable: farma_cidomefenmico
+    - text: Posible reducción del efecto antihipertensivo por meloxicam.
+      condition:
+        variable: farma_meloxicam
+    - text: Posible reducción del efecto antihipertensivo por nabumetona.
+      condition:
+        variable: farma_nabumetona
+    - text: Posible reducción del efecto antihipertensivo por naproxeno.
+      condition:
+        variable: farma_naproxeno
+    - text: Posible riesgo de bradicardia e hipotensión por neostigmina.
+      condition:
+        variable: farma_neostigmina
+    - text: Complicaciones cardiacas en relación con el tratamiento con nifedipino.
+      condition:
+        variable: farma_nifedipino
+    - text: Posible reducción del efecto antihipertensivo por ácido niflúmico.
+      condition:
+        variable: farma_cidoniflmico
+    - text: Posible acumulación del paracetamol.
+      condition:
+        variable: farma_paracetamol
+    - text: Posible reducción del efecto antihipertensivo por parecoxib.
+      condition:
+        variable: farma_parecoxib
+    - text: Posible potenciación de la toxicidad con bradicardia e hipotensión por
+        uso de piridostigmina.
+      condition:
+        variable: farma_bromurodepiridostigmina
+    - text: Posible reducción del efecto antihipertensivo por piroxicam.
+      condition:
+        variable: farma_piroxicam
+    - text: Posible acumulación de betabloqueantes por uso de promestireno.
+      condition:
+        variable: farma_promestrieno
+    - text: Posible acumulación de betabloqueantes por propafenona.
+      condition:
+        variable: farma_propafenona
+    - text: Posible pérdida terapéutica de los betabloqueantes por uso de rifampicina.
+      condition:
+        variable: farma_rifampicina
+    - text: Posible acumulación orgánica del antimigrañoso.
+      condition:
+        variable: farma_rizatriptn
+    - text: Posible aumento de la duración y efecto del bloqueante neuromuscular.
+      condition:
+        variable: farma_clorurodesuxametonio
+    - text: Posible reducción del efecto antihipertensivo por tenoxicam.
+      condition:
+        variable: farma_tenoxicam
+    - text: Posible potenciación de los efectos broncodilatadores de la teofilina.
+      condition:
+        variable: farma_teofilina
+    - text: Acumulación orgánica de susratos mayores del CYP2D6 de terbinafina.
+      condition:
+        variable: farma_terbinafina
+    - text: Posible disminución de la acción de los betabloqueantes por uso de tiopental.
+      condition:
+        variable: farma_tiopentalsdico
+    - text: Puede originarse una importante depresión miocárdica por verapamilo.
+      condition:
+        variable: farma_verapamilo
+    - text: Posible potenciación del efecto anticoagulante de warfarina.
+      condition:
+        variable: farma_warfarina
+    - text: Pueden originarse hipoglucemias por uso de acarbosa.
+      condition:
+        variable: farma_acarbosa
+    - text: Posible acumulación de agomelatina.
+      condition:
+        variable: farma_agomelatina
+    - text: Pueden originarse hipoglucemias por uso de albiglutida.
+      condition:
+        variable: farma_albiglutida
+    - text: Posible disminución de la absorción gastrointestinal de los betabloqueantes
+        por uso de algeldrato.
+      condition:
+        variable: farma_algeldrato
+    - text: Posible disminución de la absorción gastrointestinal de los betabloqueantes
+        por uso de almasilato.
+      condition:
+        variable: farma_almasilato
+    - text: Posible aumento de los efectos hipotensores por uso de alprostadilo.
+      condition:
+        variable: farma_alprostadilo
+    - text: Pueden originarse hipoglucemias por la canaglifozina.
+      condition:
+        variable: farma_canaglifozina
+    - text: Posible aumento de las concentraciones plasmáticas de citalopram.
+      condition:
+        variable: farma_citalopram
+    - text: Posible potenciación de la toxicidad de los analgésicos narcóticos.
+      condition:
+        variable: farma_codena
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_dapaglifozina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_empaglifozina
+    - text: Posible aumento de las concentraciones plasmáticas de escitalopram.
+      condition:
+        variable: farma_escitalopram
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_exenatida
+    - text: Posible alteración de la excrección renal de fampridina.
+      condition:
+        variable: farma_fampridina
+    - text: Puede originarse una importante elevación de la presión arterial por uso
+        de vasoconstrictores nasales.
+      condition:
+        variable: farma_fenilefrinanasal
+    - text: Posible potenciación de la toxicidad de los analgésicos narcóticos.
+      condition:
+        variable: farma_fentanilo
+    - text: Posible enlentecimiento excesivo del ritmo cardiaco por galantamina.
+      condition:
+        variable: farma_galantamina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_glibenclamida
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_gliclazida
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_glimepirida
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_glipizida
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_glisentida
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_gomaguar
+    - text: Posible potenciación de los efectos de haloperidol y propranolol.
+      condition:
+        variable: farma_haloperidol
+    - text: Posible acumulación de los sustratos mayores del CYP2D6 por uso de imatinib.
+      condition:
+        variable: farma_imatinib
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_insulina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_linagliptina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_liraglutida
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_lixisenatida
+    - text: Alteración de la absorción gastrointestinal de propranolol por uso de
+        magnesio.
+      condition:
+        variable: farma_carbonatodemagnesio
+    - text: Alteración de la absorción gastrointestinal de propranolol por uso de
+        magnesio.
+      condition:
+        variable: farma_hidrxidodemagnesio
+    - text: Alteración de la absorción gastrointestinal de propranolol por uso de
+        magnesio.
+      condition:
+        variable: farma_xidodemagnesio
+    - text: Alteración de la absorción gastrointestinal de propranolol por uso de
+        magnesio.
+      condition:
+        variable: farma_trisilicatodemagnesio
+    - text: Posible potenciación de la toxicidad de los analgésicos narcóticos.
+      condition:
+        variable: farma_metadona
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_metformina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_miglitol
+    - text: Posible aumento de las concentraciones plasmáticas de modafilino.
+      condition:
+        variable: farma_modafilino
+    - text: Posible potenciación de la toxicidad de los analgésicos narcóticos.
+      condition:
+        variable: farma_morfina
+    - text: Posible elevación de la tensión arterial por uso de vasoconstrictores
+        nasales.
+      condition:
+        variable: farma_nafazolinanasal
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_nateglinida
+    - text: Posible aumento de los niveles séricos de betabloqueante por uso de nisoldipino.
+      condition:
+        variable: farma_nisoldipino
+    - text: Posible potenciación de la toxicidad de los analgésicos narcóticos.
+      condition:
+        variable: farma_opio
+    - text: Posible elevación de la tensión arterial por uso de vasoconstrictores
+        nasales.
+      condition:
+        variable: farma_oximetazolinanasal
+    - text: Posible potenciación de la toxicidad de los analgésicos narcóticos.
+      condition:
+        variable: farma_petidina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_pioglitazona
+    - text: Posible aumento de las concentraciones plasmáticas de pixantrona.
+      condition:
+        variable: farma_pixantrona
+    - text: Posible acumulación de los sustratos mayores del CYP2D6 por uso de ranolazina.
+      condition:
+        variable: farma_ranolazina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_repaglinida
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_saxagliptina
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_sitagliptina
+    - text: Puede originarse una importante elevación de la tensión arterial por uso
+        de tramazolina.
+      condition:
+        variable: farma_tramazolinanasal
+    - text: Posible aumento de las concentraciones plasmáticas del CYP1A2 por uso
+        de vemurafenib.
+      condition:
+        variable: farma_vemurafenib
+    - text: Pueden originarse hipoglucemias por uso de antidiabéticos orales.
+      condition:
+        variable: farma_vildagliptina
+    - text: Posible elevación de la tensión arterial por uso de vasoconstrictores
+        nasales.
+      condition:
+        variable: farma_xilometazolinanasal
+    forbidden:
+    - text: Embarazo o deseo de gestación (categoría C de la FDA).
+      condition:
+        variable: embarazo
+    - text: Alergia o intolerancia al fármaco.
+      condition:
+        variable: alergia_propranolol
+    - text: Contraindicado en pacientes con tensión arterial sistólica inferior a
+        100 mmHg.
+      condition:
+        variable: hipotension
+    - text: Contraindicado en pacientes con frecuencia cardiaca inferior a 50 lpm.
+      condition:
+        variable: bradicardia
+    - text: Contraindicado en pacientes con bloqueo cardiaco de segundo o tercer grado
+        debido a su efecto negativo en el tiempo de conducción.
+      condition:
+        variable: arritmia_o_bloqueo_cardiaco
+    - text: En caso de acidosis metabólica, el bloqueo de los receptores beta puede
+        provocar una disminución del tono simpático necesario para conservar las funciones
+        vitales.
+      condition:
+        variable: acidosis_metablica
+    - text: El bloqueo de los receptores beta 2 adrenérgicos por propranolol puede
+        precipitar episodios de broncospasmo empeorando la enfermedad.
+      condition:
+        variable: asma
+    - text: Posible reducción del efecto de los broncodilatadores beta 2 adrenérgicos.
+      condition:
+        variable: farma_bambuterol
+    - text: La administración conjunta con clonidina puede originar un aumento de
+        la presión arterial.
+      condition:
+        variable: farma_clonidina
+    - text: Posible potenciación del efecto de benzodiacepinas.
+      condition:
+        variable: farma_clorazepatodipotsico
+    - text: Posible potenciación del efecto de benzodiacepinas.
+      condition:
+        variable: farma_clordiacepxido
+    - text: Posible aumento de los niveles plasmáticos de propranolol y clorpromacina.
+      condition:
+        variable: farma_clorpromacina
+    - text: Posible bradicardia e hipotensión severa por administración conjunta de
+        disopiramida.
+      condition:
+        variable: farma_disopiramida
+    - text: Posible elevación de la tensión arterial, bradicardia y arritmias por
+        dopamina.
+      condition:
+        variable: farma_dopamina
+    - text: Posible elevación de la tensión arterial, bradicardia y arritmias por
+        epinefrina.
+      condition:
+        variable: farma_epinefrina
+    - text: Posible elevación de la tensión arterial, bradicardia y arritmias por
+        fenilefrina.
+      condition:
+        variable: farma_fenilefrinanasal
+    - text: Riesgo de disminución excesiva de frecuencia cardiaca por fingolimod.
+      condition:
+        variable: farma_fingolimod
+    - text: Riesgo de bloqueo cardiaco completo por fluoxetina.
+      condition:
+        variable: farma_fluoxetina
+    - text: Posible reducción del efecto de los broncodilatadores beta 2 adrenérgicos.
+      condition:
+        variable: farma_formoterol
+    - text: Posible incremento de los niveles de glucosa en sangre por hidroclorotiazida.
+      condition:
+        variable: farma_hidroclorotiazida
+    - text: Puede dar lugar a broncoespasmo.
+      condition:
+        variable: farma_indacaterol
+    - text: Riesgo de intoxicación por lidocaína.
+      condition:
+        variable: farma_lidocana
+    - text: Posible potenciación del efecto y la toxicidad del medazepam.
+      condition:
+        variable: farma_medazepam
+    - text: Potenciación de los efectos broncoconstrictores de la metacolina.
+      condition:
+        variable: farma_metacolina
+    - text: Posible reducción de los niveles séricos de nimodipino.
+      condition:
+        variable: farma_nimodipino
+    - text: Puede dar lugar a broncoespasmos por uso de olodaterol.
+      condition:
+        variable: farma_olodaterol
+    - text: Posible potenciación del efecto de benzodiacepinas.
+      condition:
+        variable: farma_pinazepam
+    - text: Posible aumento de hipotensión ortostática por prazosina.
+      condition:
+        variable: farma_prazosina
+    - text: Posible aumento de los niveles plasmáticos de procainamida.
+      condition:
+        variable: farma_procainamida
+    - text: Posible reducción del efecto de los broncodilatadores beta 2 adrenérgicos.
+      condition:
+        variable: farma_salbutamol
+    - text: Posible reducción del efecto de los broncodilatadores beta 2 adrenérgicos.
+      condition:
+        variable: farma_salmeterol
+    - text: Posible reducción del efecto de los broncodilatadores beta 2 adrenérgicos.
+      condition:
+        variable: farma_terbutalina
+    - text: Puede dar lugar a broncospasmo por uso de vilanterol.
+      condition:
+        variable: farma_vilanterol
+  order_conditions:
+    concomitantConditions:
+    - text: Anginas de pecho de repetición.
+      condition:
+        variable: angina
+    - text: Ansiedad con taquicardias y temblores.
+      condition:
+        variable: ansiedad
+    - text: Arritmia cardiaca suceptible de mejora con betabloqueantes.
+      condition:
+        variable: arritmia_cardiaca
+    - text: Hipertensión arterial.
+      condition:
+        variable: hipertensin_arterial
+    - text: Miocardiopatía hipertrófica obstructiva.
+      condition:
+        variable: miocardiopata_hipertrfica
+    - text: Temblor esencial.
+      condition:
+        variable: temblor_esencial
+    - text: Tirotoxicosis.
+      condition:
+        variable: tirotoxicosis
+    - text: Varices esofágicas.
+      condition:
+        variable: varices_esofgicas
+- name: topiramato
+  label: Topiramato
+  description:
+  properties:
+    price: 1
+  level_conditions:
+    recommended: []
+    notRecommended:
+    - text: Se han observado reacciones de fotosensibilidad durante el tratamiento.
+      condition:
+        variable: fotosensibilidad
+    - text: Puede verse disminuido su aclaramiento.
+      condition:
+        variable: insuficiencia_heptica
+    - text: Otras enfermedades o tratamientos que predispongan a la acidosis metabólica
+        pueden tener efectos aditivos respecto a la reducción del bicarbonato causada.
+      condition:
+        variable: acidosis_metablica
+    - text: Se excreta mayoritariamente con la orina de forma inalterada, por lo que
+        podría incrementarse su toxicidad.
+      condition:
+        variable: insuficiencia_renal
+    - text: Se ha descrito que puede causar miopía aguda con glaucoma secundario de
+        ángulo cerrado.
+      condition:
+        variable: glaucoma
+    - text: Se han descrito intentos suicidas en relación con la administración.
+      condition:
+        variable: tendencia_suicida
+    - text: Se han comunicado episodios depresivos en relación con la administración.
+      condition:
+        variable: depresin
+    - text: Es necesario precaución en pacientes que presentan alteraciones cognitivas
+        o de la conducta.
+      condition:
+        variable: alteraciones_cognitivas
+    - text: Existe aumento del riesgo de formación de cálculos renales durante la
+        administración.
+      condition:
+        variable: clculos_urinarios
+    - text: Reducción de los niveles de topiramato por uso de carbamazepina.
+      condition:
+        variable: farma_carbamazepina
+    - text: Reducción de los niveles de digoxina.
+      condition:
+        variable: farma_digoxina
+    - text: Reducción de los niveles de topiramato por uso de eslicarbazepina.
+      condition:
+        variable: farma_eslicarbazepina
+    - text: Reducción de los niveles del estrógeno y posible pérdida de efectividad.
+      condition:
+        variable: farma_etinilestradiol
+    - text: Reducción de los niveles de topiramato por uso de fenitoína.
+      condition:
+        variable: farma_fenitona
+    - text: Reducción de los niveles de topiramato por uso de fenobarbital.
+      condition:
+        variable: farma_fenobarbital
+    - text: Reducción de los niveles del antidiabético.
+      condition:
+        variable: farma_glibenclamida
+    - text: Reducción de los niveles de topiramato por uso de hidroclorotiazida.
+      condition:
+        variable: farma_hidroclorotiazida
+    - text: Aumento de los niveles de litio.
+      condition:
+        variable: farma_carbonatodelitio
+    - text: Aumento de los niveles de metformina.
+      condition:
+        variable: farma_metformina
+    - text: Reducción de los niveles de pioglitazona.
+      condition:
+        variable: farma_pioglitazona
+    - text: Reducción de los niveles de topiramato por uso de valproato.
+      condition:
+        variable: farma_valproato
+    - text: Reducción de los niveles de topiramato por uso de primidona.
+      condition:
+        variable: farma_primidona
+    forbidden:
+    - text: Embarazo o deseo de gestación (categoría C de la FDA).
+      condition:
+        variable: embarazo
+    - text: Alergia o intolerancia al fármaco.
+      condition:
+        variable: alergia_topiramato
+    - text: Causa pérdida de peso y no se debe utilizar en caso de anorexia nerviosa.
+      condition:
+        variable: anorexia
+    - text: El paciente desea tomar bebidas alcohólicas durante el tratamiento.
+      condition:
+        variable: alcohol
+    - text: Mayor incidencia de nefrolitiasis por acetazolamida.
+      condition:
+        variable: farma_acetazolamida
+    - text: Mayor incidencia de nefrolitiasis por ácido ascórbico.
+      condition:
+        variable: farma_cidoascrbico
+    - text: Mayor incidencia de nefrolitiasis por carbonato de calcio.
+      condition:
+        variable: farma_carbonatodecalcio
+    - text: Mayor incidencia de nefrolitiasis por cloruro de calcio.
+      condition:
+        variable: farma_clorurodecalcio
+    - text: Mayor incidencia de nefrolitiasis por fostato de calcio.
+      condition:
+        variable: farma_fosfatodecalcio
+    - text: Mayor incidencia de nefrolitiasis por lactato de calcio.
+      condition:
+        variable: farma_lactatodecalcio
+    - text: Mayor incidencia de nefrolitiasis por pidolato de calcio.
+      condition:
+        variable: farma_pidolatodecalcio
+    - text: Posible disminución de la actividad antiagregante de clopidogrel.
+      condition:
+        variable: farma_clopidogrel
+    - text: Mayor incidencia de nefrolitiasis de gluconato de calcio.
+      condition:
+        variable: farma_gluconatodecalcio
+    - text: Mayor incidencia de nefrolitiasis de saquinavir.
+      condition:
+        variable: farma_saquinavir
+    - text: Mayor incidencia de nefrolitiasis de triamtereno.
+      condition:
+        variable: farma_triamtereno
+    - text: Mayor incidencia de nefrolitiasis de zonisamida.
+      condition:
+        variable: farma_zonisamida
+  order_conditions:
+    concomitantConditions:
+    - text: Epilepsia.
+      condition:
+        variable: epilepsia
+    - text: Obesidad o sobrepeso.
+      condition:
+        variable: obesidad
+- name: valproato
+  label: Valproato
+  description:
+  properties:
+    price: 0
+  level_conditions:
+    recommended: []
+    notRecommended:
+    - text: Su metabolización hepática puede potenciar la síntesis de determinados
+        enzimas como la ALA sintetasa, que puede dar lugar a un aumento de porfirinas,
+        lo que provoca la exacerbación de la enfermedad.
+      condition:
+        variable: porfiria
+    - text: En muy raras ocasiones, se han documentado pancreatitis graves.
+      condition:
+        variable: dolor_abdominal
+    - text: En muy raras ocasiones, se han documentado pancreatitis graves.
+      condition:
+        variable: pancreatitis
+    - text: Puede ocasionar aumento de peso.
+      condition:
+        variable: obesidad
+    - text: Ocasionalmente produce depresión reversible de la médula ósea.
+      condition:
+        variable: aplasia_medular
+    - text: En caso de insuficiencia renal, pueden aumentar sus concentraciones séricas
+        libres, debiendo disminuir la posología.
+      condition:
+        variable: insuficiencia_renal
+    - text: La toma de antiepilépticos se ha asociado con tendencia suicida.
+      condition:
+        variable: tendencia_suicida
+    - text: Durante la administración, es necesario vigilar al paciente acerca de
+        la aparición o empeoramiento de estados de depresión.
+      condition:
+        variable: depresin
+    - text: Muy excepcionalmente se han registrado manifestaciones inmunológicas en
+        pacientes con lupus.
+      condition:
+        variable: lupus
+    - text: Posible aumento de la actividad anticoagulante.
+      condition:
+        variable: farma_acenocumarol
+    - text: Posible aumento de los niveles plasmáticos de valproato.
+      condition:
+        variable: farma_cidoacetilsaliclico
+    - text: Posible reducción de los niveles séricos de valproato por aciclovir.
+      condition:
+        variable: farma_aciclovir
+    - text: Posible reducción de los niveles séricos de valproato por bleomicina.
+      condition:
+        variable: farma_bleomicina
+    - text: Posible reducción de los niveles séricos de valproato por cisplatino.
+      condition:
+        variable: farma_cisplatino
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_clonacepam
+    - text: Posible aumento de niveles de valproato.
+      condition:
+        variable: farma_clorpromacina
+    - text: Posible reducción de la biodisponibilidad del valproato por colestiramina.
+      condition:
+        variable: farma_colestiramina
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_diazepam
+    - text: Posible reducción de los niveles séricos de valproato por doxorubicina.
+      condition:
+        variable: farma_doxorubicina
+    - text: Riesgo de intoxicación por etosuximida.
+      condition:
+        variable: farma_etosuximida
+    - text: Posible pérdida de la eficacia de flunarizina.
+      condition:
+        variable: farma_flunarizina
+    - text: Posible acumulación orgánica de lamotrigina.
+      condition:
+        variable: farma_lamotrigina
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_lorazepam
+    - text: Posible reducción de la biodisponibilidad de valproato por metotrexato
+      condition:
+        variable: farma_metotrexato
+    - text: Posible aumento de la concentración por uso de naproxeno.
+      condition:
+        variable: farma_naproxeno
+    - text: Posible aparición de convulsiones por orlistat.
+      condition:
+        variable: farma_orlistat
+    - text: Posible reducción de los niveles de oxcarbazepina
+      condition:
+        variable: farma_oxcarbazepina
+    - text: Posible aumento de las concentraciones de oxibato y aumento de su toxicidad.
+      condition:
+        variable: farma_oxibatosdico
+    - text: Posible acumulación orgánica de rufinamida.
+      condition:
+        variable: farma_rufinamida
+    - text: Posible reducción de los niveles de topiramato.
+      condition:
+        variable: farma_topiramato
+    - text: Posible reducción de la biodisponibilidad del anticonvulsivante.
+      condition:
+        variable: farma_vinblastina
+    - text: Posible aumento de la actividad anticoagulante.
+      condition:
+        variable: farma_warfarina
+    - text: Posible acumulación de zidovudina.
+      condition:
+        variable: farma_zidovudina
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_alprazolam
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_bromazepam
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_clorazepatodipotsico
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_clordiacepxido
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_clotiazepam
+    - text: Posible riesgo de hiperamoniemia con fenilbutirato.
+      condition:
+        variable: farma_fenilbutiratosdico
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_flurazepam
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_lormetazepam
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_medazepam
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_oxazepam
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_pinazepam
+    - text: Posible potenciación de benzodiacepinas.
+      condition:
+        variable: farma_triazolam
+    - text: La administración junto con zolpidem puede inducir sonambulismo.
+      condition:
+        variable: farma_zolpidem
+    forbidden:
+    - text: Embarazo o deseo de gestación (categoría D de la FDA).
+      condition:
+        variable: embarazo
+    - text: Alergia o intolerancia al fármaco.
+      condition:
+        variable: alergia_valproato
+    - text: Alto riesgo de hepatotoxicidad en caso de insuficiencia hepática.
+      condition:
+        variable: insuficiencia_heptica
+    - text: Alto riesgo de hepatotoxicidad en caso de hepatitis aguda o crónica.
+      condition:
+        variable: hepatitis_aguda_o_crnica
+    - text: Posible acumulación de amitriptilina.
+      condition:
+        variable: farma_amitriptilina
+    - text: Posible disminución de niveles de valproato.
+      condition:
+        variable: farma_carbamazepina
+    - text: Posible potenciación de los efectos de clobazam.
+      condition:
+        variable: farma_clobazam
+    - text: Posible acumulación de clomipramina.
+      condition:
+        variable: farma_clomipramina
+    - text: Posible acumulación de clozapina.
+      condition:
+        variable: farma_clozapina
+    - text: Posible reducción de la concentración de valproato por ertapenem.
+      condition:
+        variable: farma_ertapenem
+    - text: Posible disminución de niveles de valproato.
+      condition:
+        variable: farma_eslicarbazepina
+    - text: Posible disminución de niveles de fenitoína.
+      condition:
+        variable: farma_fenitona
+    - text: Posible aumento de niveles de fenobarbital.
+      condition:
+        variable: farma_fenobarbital
+    - text: Posible reducción de la concentración de valproato por imipenem.
+      condition:
+        variable: farma_imipenem
+    - text: Posible reducción de la concentración de valproato por meropenem.
+      condition:
+        variable: farma_meropenem
+    - text: Posible incremento de los niveles plasmáticos de nimodipino.
+      condition:
+        variable: farma_nimodipino
+    - text: Posible acumulación de nortriptilina.
+      condition:
+        variable: farma_nortriptilina
+    - text: Posible aumento de niveles plasmáticos de primidona.
+      condition:
+        variable: farma_primidona
+  order_conditions:
+    concomitantConditions:
+    - text: Ausencias.
+      condition:
+        variable: ausencias
+    - text: Epilepsia.
+      condition:
+        variable: epilepsia
+    - text: Tics.
+      condition:
+        variable: tics
+    - text: Trastorno bipolar.
+      condition:
+        variable: trastorno_bipolar
+default_boolean_answers:
+  true: Sí
+  false: 'No'
+no_suitable_therapies_text: No se recomienda ningún tratamiento debido a las características
+  del paciente.
+show_complete_evaluation_text: Mostrar evaluacion completa
