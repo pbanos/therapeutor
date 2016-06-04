@@ -15,22 +15,20 @@ class Therapeutor::Questionnaire
     :preference_orders,
     :recommendation_levels,
     :therapies,
-    :default_boolean_questions,
+    :default_boolean_answers,
     :no_suitable_therapies_text,
     :show_complete_evaluation_text
   )
 
-  DEFAULT_CONFIG= {
-    default_boolean_question:{
-      yes: "Yes",
-      no: "No"
-    }
+  DEFAULT_DEFAULT_BOOLEAN_ANSWERS= {
+    true => "Yes",
+    false => "No"
   }
 
   validates :name, presence: true
 
   def initialize(opts = {})
-    opts = DEFAULT_CONFIG.deep_merge(opts).symbolize_keys
+    opts = opts.symbolize_keys
     @name = opts[:name]
     @description = opts[:description]
     @authors = opts[:authors].map do |author_data|
@@ -40,7 +38,7 @@ class Therapeutor::Questionnaire
       Therapeutor::Questionnaire::Contact.new(contributor_data)
     end
     @disclaimer = opts[:disclaimer]
-    @default_boolean_questions = (opts[:default_boolean_questions]||{}).symbolize_keys
+    @default_boolean_answers = DEFAULT_DEFAULT_BOOLEAN_ANSWERS.merge(opts[:default_boolean_answers]||{})
     @variables = (opts[:variables]||[]).map do |variable_data|
       Therapeutor::Questionnaire::Variable.new(variable_data.merge(questionnaire: self))
     end
@@ -107,7 +105,7 @@ class Therapeutor::Questionnaire
   end
 
   def inspect
-    properties = %w(name authors contributors default_boolean_questions).map do |key|
+    properties = %w(name authors contributors default_boolean_answers).map do |key|
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"

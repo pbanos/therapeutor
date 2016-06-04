@@ -26,11 +26,11 @@ class Therapeutor::Questionnaire::Question
   end
 
   def yes_text
-    (variable_config.values.first||{})[true] || questionnaire.default_boolean_questions[true]
+    (variable_config.values.first||{})[true] || questionnaire.default_boolean_answers[true]
   end
 
   def no_text
-    (variable_config.values.first||{})[false] || questionnaire.default_boolean_questions[false]
+    (variable_config.values.first||{})[false] || questionnaire.default_boolean_answers[false]
   end
 
   def variable_text(variable)

@@ -118,7 +118,7 @@ therapies:
         - text: The aspirin treats the temperature
           condition:
             variable: temperature
-default_boolean_questions:
+default_boolean_answers:
   yes: "Yes" # Default label for boolean positive answers
   no: "No" # Default label for boolean negative answers
 no_suitable_therapies_text: No therapy can be recommended

@@ -74,7 +74,7 @@ Therapeutor questionnaires are specified in [YAML](https://en.wikipedia.org/wiki
 * preference_orders. This element is described later on.
 * recommendation_levels. This element is described later on.
 * therapies. This element is described later on.
-* default_boolean_question. This optional property is declared as an associative array that sets the default labels for yes/no question answers (see the description of sections for further information. It has the following properties
+* default_boolean_answers. This optional property is declared as an associative array that sets the default labels for yes/no question answers (see the description of sections for further information). It has the following properties
   * yes: default label for boolean positive answers
   * no: default label for boolean negative answers
 * no_suitable_therapies_text. Text to show when no suitable therapies can be recommended
@@ -121,8 +121,8 @@ The element _sections_ declares the questions of the questionnaire. On the gener
   * variables: a list of associative arrays, each representing a variable the question sets. If the question only has one variable, it will be rendered as a yes/no question on the application and its properties in the specification must be:
 
     * name: the name of the variable as declared on the variables section
-    * yes: a label to show for the boolean affirmative answer to the question. This property is optional and will take the value set in the *default_boolean_question* property of the questionnaire by default.
-    * no: a label to show for the boolean negative answer to the question. This property is optional and will take the value set in the *default_boolean_question* property of the questionnaire by default.
+    * yes: a label to show for the boolean affirmative answer to the question. This property is optional and will take the value set in the *default_boolean_answers* property of the questionnaire by default.
+    * no: a label to show for the boolean negative answer to the question. This property is optional and will take the value set in the *default_boolean_answers* property of the questionnaire by default.
 
     If however the question sets more than one variable, it will be rendered as a multiple-choice question on the application with an input to enable/disable each variable. Then, the properties of each associative array must be:
 

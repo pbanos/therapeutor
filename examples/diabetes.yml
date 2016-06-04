@@ -196,7 +196,7 @@ therapies:
         - text: The patient has the HbA1C under control and does not need any more treatment
           condition:
             variable: hbA1CUnder7Percent
-default_boolean_questions:
+default_boolean_answers:
   yes: "Yes" # Default label for boolean positive answers
   no: "No" # Default label for boolean negative answers
 no_suitable_therapies_text: The patient's diabetes is under control
