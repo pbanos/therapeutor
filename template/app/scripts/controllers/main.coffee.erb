@@ -105,9 +105,9 @@ angular.module '<%= code_suitable_name %>'
       return false if $scope.recommendationLevel(recommended) != $scope.recommendationLevel(second_best)
     <%- order.previous_preference_orders.each do |previous_order|
       order_evaluation = if previous_order.is_a?(Therapeutor::Questionnaire::Therapy::ConditionCountOrder)
-        "#{order.code_suitable_name}($scope.answers)"
+        "#{previous_order.code_suitable_name}($scope.answers)"
       else
-        "#{order.code_suitable_name}"
+        "#{previous_order.code_suitable_name}"
       end -%>
       return false if recommended.<%= order_evaluation%> != second_best.<%= order_evaluation%>
     <%- end -%>
