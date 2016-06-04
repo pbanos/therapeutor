@@ -1035,7 +1035,7 @@ therapies:
   label: Acetazolamida
   description:
   properties:
-    price: 1
+    price: 2
   level_conditions:
     recommended: []
     notRecommended:
@@ -1481,7 +1481,7 @@ therapies:
   label: Flunarizina
   description:
   properties:
-    price: 1
+    price: 4
   level_conditions:
     recommended: []
     notRecommended:
@@ -1537,7 +1537,7 @@ therapies:
   label: Propranolol
   description:
   properties:
-    price: 1
+    price: 3
   level_conditions:
     recommended: []
     notRecommended:
@@ -2062,7 +2062,7 @@ therapies:
   label: Topiramato
   description:
   properties:
-    price: 1
+    price: 6
   level_conditions:
     recommended: []
     notRecommended:
@@ -2198,7 +2198,7 @@ therapies:
   label: Valproato
   description:
   properties:
-    price: 0
+    price: 5
   level_conditions:
     recommended: []
     notRecommended:
