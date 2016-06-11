@@ -9,8 +9,8 @@ class Therapeutor::Questionnaire::Therapy::LevelCondition
   attr_accessor :level, :conditions, :therapy
 
   validates :level, presence: true
-  validates :conditions, presence: true
   validates :therapy, presence: true
+  validate :validate_conditions
 
   def initialize(opts={})
     opts.symbolize_keys!
@@ -30,6 +30,21 @@ class Therapeutor::Questionnaire::Therapy::LevelCondition
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
+  end
+
+  def validate_conditions
+    level_name = if level && level.name
+      "'#{level.name}'"
+    else
+      'unnamed'
+    end
+    conditions.each.with_index do |condition, i|
+      unless condition.valid?
+        error_to_add = condition.errors.full_messages.join(',')
+        errors.add(:base,
+          "Invalid #{level_name} level condition ##{i+1}: #{error_to_add}")
+      end
+    end
   end
 
 end

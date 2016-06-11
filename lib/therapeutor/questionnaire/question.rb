@@ -3,7 +3,7 @@ class Therapeutor::Questionnaire::Question
 
   attr_accessor :text, :variables, :variable_config, :section
 
-  validates :text, presence: true
+  validates :text, presence: {allow_blank: false}
   validates :section, presence: true
 
   def initialize(opts={})

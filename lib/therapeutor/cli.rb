@@ -33,7 +33,10 @@ class Therapeutor::CLI < Thor
           exit(5)
         end
       else
-        STDERR.puts("Invalid questionnaire: #{questionnaire.errors.inspect}")
+        STDERR.puts("Invalid questionnaire:")
+        questionnaire.errors.full_messages.each do |error|
+          STDERR.puts("- #{error}")
+        end
         exit(3)
       end
     else

@@ -9,8 +9,8 @@ class Therapeutor::Questionnaire::Therapy::OrderCondition
   attr_accessor :preference_order, :conditions, :therapy
 
   validates :preference_order, presence: true
-  validates :conditions, presence: true
   validates :therapy, presence: true
+  validate :validate_conditions
 
   def initialize(opts={})
     opts.symbolize_keys!
@@ -30,6 +30,21 @@ class Therapeutor::Questionnaire::Therapy::OrderCondition
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
+  end
+
+  def validate_conditions
+    order_name = if preference_order && preference_order.name
+      "'#{preference_order.name}'"
+    else
+       'unnamed'
+    end
+    conditions.each.with_index do |condition, i|
+      unless condition.valid?
+        error_to_add = condition.errors.full_messages.join(',')
+        errors.add(:base,
+          "Invalid #{order_name} order condition ##{i+1}: #{error_to_add}")
+      end
+    end
   end
 
 end

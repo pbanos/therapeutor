@@ -202,11 +202,10 @@ It usually happens that different therapies end up assigned to the same recommen
 On the specification, the *preference_orders* element is a list of associative arrays, each representing a preference order. The following properties are available for static preference orders:
 
 * type: it must be set to 'static' to declare the order as a static preference order
-* name: an internal name for identifying the preference order
+* name: an internal name for identifying the preference order and the name of the therapy property to use for sorting
 * label: a label to show the preference order as on the evaluation of therapies
 * *draw_resolution_text*: a text to show when the preference order has been determinant for the therapy selection
 * descending: an optional property indicating a lower value indicates higher preference, false by default
-* property: the name of the therapy property to use for sorting
 
 The following properties are available for dynamic preference orders:
 

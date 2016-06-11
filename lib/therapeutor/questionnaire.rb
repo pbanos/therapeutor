@@ -25,7 +25,15 @@ class Therapeutor::Questionnaire
     false => "No"
   }
 
-  validates :name, presence: true
+  validates :name, presence: {allow_blank: false}
+  validates :no_suitable_therapies_text, presence: {allow_blank: false}
+  validates :show_complete_evaluation_text, presence: {allow_blank: false}
+  validate :validate_contacts
+  validate :validate_variables
+  validate :validate_sections
+  validate :validate_preference_orders
+  validate :validate_recommendation_levels
+  validate :validate_therapies
 
   def initialize(opts = {})
     opts = opts.symbolize_keys
@@ -67,7 +75,7 @@ class Therapeutor::Questionnaire
     @show_complete_evaluation_text = opts[:show_complete_evaluation_text]
   end
 
-  def code_suitable_name
+  def code_suitable(name)
     name.tr('^A-Za-z0-9','')
   end
 
@@ -109,6 +117,51 @@ class Therapeutor::Questionnaire
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
+  end
+
+  def validate_variables
+    Therapeutor::Questionnaire::Variable.validate_set(variables).each do |error|
+      errors.add(:base, error)
+    end
+  end
+
+  def validate_sections
+    Therapeutor::Questionnaire::Section.validate_set(sections).each do |error|
+      errors.add(:base, error)
+    end
+  end
+
+  def validate_preference_orders
+    Therapeutor::Questionnaire::Therapy::PreferenceOrder.validate_set(preference_orders).each do |error|
+      errors.add(:base, error)
+    end
+  end
+
+  def validate_recommendation_levels
+    Therapeutor::Questionnaire::RecommendationLevel.validate_set(recommendation_levels).each do |error|
+      errors.add(:base, error)
+    end
+  end
+
+  def validate_therapies
+    Therapeutor::Questionnaire::Therapy.validate_set(therapies).each do |error|
+      errors.add(:base, error)
+    end
+  end
+
+  def validate_contacts
+    authors.each.with_index do |author, i|
+      unless author.valid?
+        error_to_add = author.errors.full_messages.join(', ')
+        errors.add(:base, "Author #{i+1} invalid: #{error_to_add}")
+      end
+    end
+    contributors.each.with_index do |contributor, i|
+      unless contributor.valid?
+        error_to_add = contributor.errors.full_messages.join(', ')
+        errors.add(:base, "Contributor #{i+1} invalid: #{error_to_add}")
+      end
+    end
   end
 end
 

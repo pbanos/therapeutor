@@ -2,16 +2,16 @@
 
 ###*
  # @ngdoc function
- # @name <%= code_suitable_name %>.controller:MainCtrl
+ # @name <%= code_suitable(name) %>.controller:MainCtrl
  # @description
  # # MainCtrl
- # Controller of the <%= code_suitable_name %>
+ # Controller of the <%= code_suitable(name) %>
 ###
 <%- def boolean_expression_to_js(expression)
   case expression
   when Therapeutor::BooleanExpression::BooleanConstant then expression.value.to_s
-  when Therapeutor::BooleanExpression::Variable then "answers.#{variable(expression.name).code_suitable_name}"
-  when Therapeutor::BooleanExpression::NotExpression then  "!answers.#{variable(expression.operand.name).code_suitable_name}"
+  when Therapeutor::BooleanExpression::Variable then "answers.#{code_suitable(variable(expression.name).name)}"
+  when Therapeutor::BooleanExpression::NotExpression then  "!answers.#{code_suitable(variable(expression.operand.name).name)}"
   when Therapeutor::BooleanExpression::AndExpression then and_to_js(expression)
   when Therapeutor::BooleanExpression::OrExpression then or_to_js(expression)
   end
@@ -27,18 +27,18 @@ def or_to_js(expression)
   end.join(' or ')
 end-%>
 
-angular.module '<%= code_suitable_name %>'
+angular.module '<%= code_suitable(name) %>'
   .controller 'MainCtrl', ($scope) ->
     $scope.answers = {}
   <%- therapies.each do |therapy| -%>
-    <%= therapy.code_suitable_name %> =
+    <%= code_suitable(therapy.name) %> =
     <%- therapy.properties.each do |property, value| -%>
-        <%= property %>: <%= value %>
+        <%= code_suitable(property) %>: <%= value %>
     <%- end -%>
     <%- recommendation_levels.each do |recommendation_level| -%>
-        <%= recommendation_level.code_suitable_name %>: (answers) ->
+        <%= code_suitable(recommendation_level.name) %>: (answers) ->
             <%- recommendation_level.previously_discarded_levels.each do |previously_discarded_level| -%>
-            !@<%= previously_discarded_level.code_suitable_name %>(answers) and
+            !@<%= code_suitable(previously_discarded_level.name) %>(answers) and
             <%- end -%>
             <%- level_condition = therapy.level_conditions.detect{|lc| lc.level == recommendation_level} -%>
             <%- if level_condition.nil? or level_condition.conditions.empty? -%>
@@ -52,7 +52,7 @@ angular.module '<%= code_suitable_name %>'
     <%- preference_orders.select do |order|
       order.is_a?(Therapeutor::Questionnaire::Therapy::ConditionCountOrder)
     end.each do |order| -%>
-        <%= order.code_suitable_name %>: (answers) ->
+        <%= code_suitable(order.name) %>: (answers) ->
           <%- order_condition = therapy.order_conditions.detect{|oc| oc.preference_order == order} -%>
           <%- conditions = order_condition ? order_condition.conditions : [] -%>
             [<%= conditions.map(&:condition).map do |condition|
@@ -64,9 +64,9 @@ angular.module '<%= code_suitable_name %>'
   <%- end -%>
     $scope.therapies=
   <%- therapies.each do |therapy| -%>
-      <%= therapy.code_suitable_name %>: <%= therapy.code_suitable_name%>
+      <%= code_suitable(therapy.name) %>: <%= code_suitable(therapy.name)%>
   <%- end -%>
-    $scope.defaultTherapyOrder = [<%= therapies.map(&:code_suitable_name).join(', ') %>]
+    $scope.defaultTherapyOrder = [<%= therapies.map{|t| code_suitable(t.name)}.join(', ') %>]
     $scope.showCompleteEvaluation = false
     $scope.visible = (therapy) ->
       therapy == $scope.recommendedTherapy()
@@ -74,21 +74,21 @@ angular.module '<%= code_suitable_name %>'
       $scope.suitableTherapies()[0]
     $scope.recommendationLevel = (therapy) ->
   <%- recommendation_levels.each.with_index do |recommendation_level, i| -%>
-      return <%= i %> if therapy.<%=recommendation_level.code_suitable_name%>($scope.answers)
+      return <%= i %> if therapy.<%=code_suitable(recommendation_level.name) %>($scope.answers)
   <%- end -%>
       return -1
     $scope.suitableTherapies = () ->
       $scope.defaultTherapyOrder.filter((therapy) ->
-        <%= recommendation_levels.select(&:banning).map{|level| "not therapy.#{level.code_suitable_name}($scope.answers)"}.join(' and ')%>
+        <%= recommendation_levels.select(&:banning).map{|level| "not therapy.#{code_suitable(level.name)}($scope.answers)"}.join(' and ')%>
       ).sort((a, b) ->
         a_level = $scope.recommendationLevel(a)
         b_level = $scope.recommendationLevel(b)
         return b_level - a_level if a_level != b_level
   <%- preference_orders.each do |order|
     order_evaluation = if order.is_a?(Therapeutor::Questionnaire::Therapy::ConditionCountOrder)
-      "#{order.code_suitable_name}($scope.answers)"
+      "#{code_suitable(order.name)}($scope.answers)"
     else
-      "#{order.code_suitable_name}"
+      "#{code_suitable(order.name)}"
     end -%>
         a_level = <%= order.descending ? '-' : '' %>a.<%= order_evaluation%>
         b_level = <%= order.descending ? '-' : '' %>b.<%= order_evaluation%>
@@ -97,7 +97,7 @@ angular.module '<%= code_suitable_name %>'
         return 0
       )
   <%- preference_orders.each do |order| -%>
-    $scope.drawResolvedBy<%= order.code_suitable_name.capitalize%> = () ->
+    $scope.drawResolvedBy<%= code_suitable(order.name).capitalize%> = () ->
       suitableTherapies = $scope.suitableTherapies()
       return false if suitableTherapies.length < 2
       recommended = suitableTherapies[0]
@@ -105,16 +105,16 @@ angular.module '<%= code_suitable_name %>'
       return false if $scope.recommendationLevel(recommended) != $scope.recommendationLevel(second_best)
     <%- order.previous_preference_orders.each do |previous_order|
       order_evaluation = if previous_order.is_a?(Therapeutor::Questionnaire::Therapy::ConditionCountOrder)
-        "#{previous_order.code_suitable_name}($scope.answers)"
+        "#{code_suitable(previous_order.name)}($scope.answers)"
       else
-        "#{previous_order.code_suitable_name}"
+        "#{code_suitable(previous_order.name)}"
       end -%>
       return false if recommended.<%= order_evaluation%> != second_best.<%= order_evaluation%>
     <%- end -%>
     <%- order_evaluation = if order.is_a?(Therapeutor::Questionnaire::Therapy::ConditionCountOrder)
-      "#{order.code_suitable_name}($scope.answers)"
+      "#{code_suitable(order.name)}($scope.answers)"
     else
-      "#{order.code_suitable_name}"
+      "#{code_suitable(order.name)}"
     end -%>
       return recommended.<%= order_evaluation%> != second_best.<%= order_evaluation %>
   <%- end -%>

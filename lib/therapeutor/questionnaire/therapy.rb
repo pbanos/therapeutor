@@ -3,8 +3,10 @@ class Therapeutor::Questionnaire::Therapy
 
   attr_accessor :name, :label, :description, :questionnaire, :level_conditions, :order_conditions, :properties
 
-  validates :name, presence: true
+  validates :name, presence: {allow_blank: false}
+  validates :label, presence: {allow_blank: false}
   validates :questionnaire, presence: true
+  validate :validate_conditions
 
   def initialize(opts={})
     opts.symbolize_keys!
@@ -30,6 +32,30 @@ class Therapeutor::Questionnaire::Therapy
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
+  end
+
+  def self.validate_set(therapies)
+    (therapies.map.with_index do |therapy, i|
+      unless therapy.valid?
+        error_to_add = therapy.errors.full_messages.join(', ')
+        "Therapy ##{i+1} invalid: #{error_to_add}"
+      end
+    end + therapies.map(&:name).compact.group_by{ |i| i }.map do |therapy, appearances|
+      times_declared = appearances.size
+      if times_declared > 1
+        "#{times_declared} therapies have been declared with name #{therapy}"
+      end
+    end).compact
+  end
+
+  def validate_conditions
+    (level_conditions + order_conditions).each do |condition|
+      unless condition.valid?
+        condition.errors.full_messages.each do |e|
+          errors.add(:base, e)
+        end
+      end
+    end
   end
 end
 require 'therapeutor/questionnaire/therapy/level_condition'

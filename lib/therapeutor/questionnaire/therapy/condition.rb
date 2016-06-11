@@ -9,7 +9,7 @@ class Therapeutor::Questionnaire::Therapy::Condition
 
   attr_accessor :text, :condition, :therapy
 
-  validates :text, presence: true
+  validates :text, presence: {allow_blank: false}
   validates :therapy, presence: true
   validates :condition, presence: true
 

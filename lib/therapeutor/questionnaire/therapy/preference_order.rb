@@ -3,7 +3,7 @@ class Therapeutor::Questionnaire::Therapy::PreferenceOrder
 
   attr_accessor :name, :label, :text, :draw_resolution_text, :descending, :questionnaire
 
-  validates :name, presence: true
+  validates :name, presence: {allow_blank: false}
   validates :questionnaire, presence: true
 
   def initialize(opts={})
@@ -32,6 +32,20 @@ class Therapeutor::Questionnaire::Therapy::PreferenceOrder
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
+  end
+
+  def self.validate_set(preference_orders)
+    (preference_orders.map.with_index do |preference_order, i|
+      unless preference_order.valid?
+        error_to_add = preference_order.errors.full_messages.join(', ')
+        "Preference order ##{i+1} invalid: #{error_to_add}"
+      end
+    end + preference_orders.map(&:name).compact.group_by{ |i| i }.map do |preference_order, appearances|
+      times_declared = appearances.size
+      if times_declared > 1
+        "#{times_declared} recommendation levels have been declared with name #{preference_order}"
+      end
+    end).compact
   end
 end
 require 'therapeutor/questionnaire/therapy/property_order'

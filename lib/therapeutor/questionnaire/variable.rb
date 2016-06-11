@@ -3,9 +3,7 @@ class Therapeutor::Questionnaire::Variable
 
   attr_accessor :name, :label, :questionnaire
 
-  validates :name, presence: true
-  validates :label, presence: true
-  validates :questionnaire, presence: true
+  validates :name, presence: {allow_blank: false}
 
   def initialize(opts={})
     opts.symbolize_keys!
@@ -23,6 +21,21 @@ class Therapeutor::Questionnaire::Variable
       "#{key}=#{send(key).inspect}"
     end.join(' ')
     "<#{self.class.name} #{properties}>"
+  end
+
+  def self.validate_set(variables)
+    (variables.map.with_index do |variable, i|
+      unless variable.valid?
+        error_to_add = variable.errors.full_messages.join(', ')
+        "Variable ##{i+1} invalid: #{error_to_add}"
+      end
+    end + variables.map(&:name).compact.group_by{ |i| i }.map do |variable, appearances|
+      times_declared = appearances.size
+      if times_declared > 1
+        times_declared = times_declared == 2 ? 'twice' : "#{times_declared} times"
+        "Variable #{variable} declared #{times_declared}"
+      end
+    end).compact
   end
 
 end

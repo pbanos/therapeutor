@@ -3,9 +3,9 @@ class Therapeutor::Questionnaire::RecommendationLevel
 
   attr_accessor :name, :label, :description, :color, :banning, :last, :previously_discarded_level
 
-  validates :name, presence: true
-  validates :label, presence: true
-  validates :color, presence: true
+  validates :name, presence: {allow_blank: false}
+  validates :label, presence: {allow_blank: false}
+  validates :color, presence: {allow_blank: false}
 
   def initialize(opts={})
     opts.symbolize_keys!
@@ -36,4 +36,25 @@ class Therapeutor::Questionnaire::RecommendationLevel
     "<#{self.class.name} #{properties}>"
   end
 
+  def self.validate_name_uniqueness(recommendation_levels)
+    recommendation_levels.map(&:name).group_by{ |i| i }.map do |recommendation_level, times_declared|
+      if v.size > 1
+        "#{times_declared} recommendation levels have been declared with name #{recommendation_level}"
+      end
+    end.compact
+  end
+
+  def self.validate_set(recommendation_levels)
+    (recommendation_levels.map.with_index do |recommendation_level, i|
+      unless recommendation_level.valid?
+        error_to_add = recommendation_level.errors.full_messages.join(', ')
+        "Recommendation level ##{i+1} invalid: #{error_to_add}"
+      end
+    end + recommendation_levels.map(&:name).compact.group_by{ |i| i }.map do |recommendation_level, appearances|
+      times_declared = appearances.size
+      if times_declared > 1
+        "#{times_declared} recommendation levels have been declared with name #{recommendation_level}"
+      end
+    end).compact
+  end
 end

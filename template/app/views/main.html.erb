@@ -12,32 +12,32 @@
   </p>
 </div>
 
-<%- sections.each do |section| -%>
-<div class="row marketing" id="<%= section.name %>">
+<%- sections.each.with_index do |section, i| -%>
+<div class="row marketing" id="section-<%= code_suitable(section.name) %>">
   <label><%= section.name%></label>
   <ul>
-  <%- section.questions.each do |question| -%>
-    <li>
+  <%- section.questions.each.with_index do |question, j| -%>
+    <li id="s<%=i%>-q<%=j%>">
       <p><%= question.text %></p>
-      <div class="form-group">
+      <div class="form-group" id="s<%=i%>-q<%=j%>-a">
       <%- if question.variables.length == 1 -%>
         <%- variable = question.variables.first -%>
-        <div class="radio">
+        <div class="radio" id="s<%=i%>-q<%=j%>-a-yes">
           <label>
-            <input type="radio" name="<%= variable.code_suitable_name %>" data-ng-value="true" ng-model="answers.<%= variable.code_suitable_name %>">
+            <input type="radio" name="<%= code_suitable(variable.name) %>" data-ng-value="true" ng-model="answers.<%= code_suitable(variable.name) %>">
             <%= question.yes_text %>
           </label>
         </div>
-        <div class="radio">
+        <div class="radio" id="s<%=i%>-q<%=j%>-a-no">
           <label>
-            <input type="radio" name="<%= variable.code_suitable_name %>" data-ng-value="false" ng-model="answers.<%= variable.code_suitable_name %>">
+            <input type="radio" name="<%= code_suitable(variable.name) %>" data-ng-value="false" ng-model="answers.<%= code_suitable(variable.name) %>">
               <%= question.no_text %>
           </label>
         </div>
       <%- else -%>
-        <%- question.variables.each do |variable| -%>
-        <label>
-          <input type="checkbox" ng-model="answers.<%= variable.code_suitable_name %>"> <%= question.variable_text(variable) %>
+        <%- question.variables.each.with_index do |variable, k| -%>
+        <label id="s<%=i%>-q<%=j%>-a<%=k%>">
+          <input type="checkbox" ng-model="answers.<%= code_suitable(variable.name) %>"> <%= question.variable_text(variable) %>
         </label>
         <%- end -%>
       <%- end -%>
@@ -51,8 +51,8 @@
 <%- def boolean_expression_to_js(expression)
   case expression
   when Therapeutor::BooleanExpression::BooleanConstant then expression.value.to_s
-  when Therapeutor::BooleanExpression::Variable then "answers.#{variable(expression.name).code_suitable_name}"
-  when Therapeutor::BooleanExpression::NotExpression then "!answers.#{variable(expression.operand.name).code_suitable_name}"
+  when Therapeutor::BooleanExpression::Variable then "answers.#{code_suitable(variable(expression.name).name)}"
+  when Therapeutor::BooleanExpression::NotExpression then "!answers.#{code_suitable(variable(expression.operand.name).name)}"
   when Therapeutor::BooleanExpression::AndExpression then and_to_js(expression)
   when Therapeutor::BooleanExpression::OrExpression then or_to_js(expression)
   end
@@ -77,14 +77,14 @@ end-%>
 
 <div class="row marketing" id="evaluation">
   <ul>
-    <%- therapies.each do |therapy| -%>
-    <li ng-show="showCompleteEvaluation || visible(therapies.<%= therapy.code_suitable_name%>)">
+    <%- therapies.each.with_index do |therapy, i| -%>
+    <li id="therapy-<%=code_suitable(therapy.name)%>" ng-show="showCompleteEvaluation || visible(therapies.<%= code_suitable(therapy.name)%>)">
       <label><%= therapy.label %></label>
       <p>
         <%= therapy.description%>
       </p>
-      <%- recommendation_levels.each do |recommendation_level| -%>
-      <div class="alert <%=color_to_alert_class(recommendation_level.color)%>" ng-show='therapies.<%= therapy.code_suitable_name%>.<%= recommendation_level.code_suitable_name%>(answers)'>
+      <%- recommendation_levels.each.with_index do |recommendation_level, j| -%>
+      <div id="t<%=i%>-l<%=j%>" class="alert <%=color_to_alert_class(recommendation_level.color)%>" ng-show='therapies.<%= code_suitable(therapy.name)%>.<%= code_suitable(recommendation_level.name)%>(answers)'>
         <%= recommendation_level.label %>
         <p>
           <%= recommendation_level.description%>
@@ -93,20 +93,20 @@ end-%>
           <%- level_condition = therapy.level_conditions.detect do |level_condition|
             level_condition.level == recommendation_level
           end
-          (level_condition ? level_condition.conditions : []).each do |condition| -%>
-            <li ng-show='<%= boolean_expression_to_js(condition.condition.to_dnf) %>'><%= condition.text %></li>
+          (level_condition ? level_condition.conditions : []).each.with_index do |condition, k| -%>
+            <li id="t<%=i%>-l<%=j%>-c<%=k%>" ng-show='<%= boolean_expression_to_js(condition.condition.to_dnf) %>'><%= condition.text %></li>
           <%- end -%>
         </ul>
         <br/>
-        <%- condition_count_orders.each do |preference_order| -%>
-        <div ng-show='therapies.<%= therapy.code_suitable_name%>.<%= preference_order.code_suitable_name%>(answers) > 0'>
+        <%- condition_count_orders.each.with_index do |preference_order, k| -%>
+        <div id="t<%=i%>-l<%=j%>-o<%=k%>" ng-show='therapies.<%= code_suitable(therapy.name)%>.<%= code_suitable(preference_order.name)%>(answers) > 0'>
           <%= preference_order.text %>
           <ul>
             <%- order_condition = therapy.order_conditions.detect do |order_condition|
               order_condition.preference_order == preference_order
             end
-            (order_condition ? order_condition.conditions : []).each do |condition| -%>
-              <li ng-show='<%= boolean_expression_to_js(condition.condition.to_dnf) %>'><%= condition.text %></li>
+            (order_condition ? order_condition.conditions : []).each.with_index do |condition, l| -%>
+              <li id="t<%=i%>-l<%=j%>-o<%=k%>-c<%=l%>" ng-show='<%= boolean_expression_to_js(condition.condition.to_dnf) %>'><%= condition.text %></li>
             <%- end -%>
           </ul>
         </div>
@@ -116,12 +116,12 @@ end-%>
     </li>
     <%- end -%>
   </ul>
-  <%- preference_orders.each do |order| -%>
-  <div ng-show='drawResolvedBy<%= order.code_suitable_name.capitalize%>()'>
+  <%- preference_orders.each.with_index do |order, i| -%>
+  <div id="resolved-by-order<%=i%>"ng-show='drawResolvedBy<%= code_suitable(order.name).capitalize%>()'>
     <%= order.draw_resolution_text %>
   </div>
   <%- end -%>
-  <div ng-show='suitableTherapies().length == 0'>
+  <div id="no-suitable-therapies" ng-show='suitableTherapies().length == 0'>
     <%= no_suitable_therapies_text %>
   </div>
   <div>

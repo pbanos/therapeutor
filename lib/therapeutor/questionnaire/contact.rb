@@ -3,7 +3,7 @@ class Therapeutor::Questionnaire::Contact
 
   attr_accessor :name, :email, :twitter, :site, :organization
 
-  validates :name, presence: true
+  validates :name, presence: {allow_blank: false}
 
   def initialize(opts={})
     opts.symbolize_keys!
