@@ -22,22 +22,15 @@
       <div class="form-group" id="s<%=i%>-q<%=j%>-a">
       <%- if question.variables.length == 1 -%>
         <%- variable = question.variables.first -%>
-        <div class="radio" id="s<%=i%>-q<%=j%>-a-yes">
-          <label>
-            <input type="radio" name="<%= code_suitable(variable.name) %>" data-ng-value="true" ng-model="answers.<%= code_suitable(variable.name) %>">
-            <%= question.yes_text %>
-          </label>
-        </div>
-        <div class="radio" id="s<%=i%>-q<%=j%>-a-no">
-          <label>
-            <input type="radio" name="<%= code_suitable(variable.name) %>" data-ng-value="false" ng-model="answers.<%= code_suitable(variable.name) %>">
-              <%= question.no_text %>
-          </label>
-        </div>
+        <input id="checkbox-s<%=i%>-q<%=j%>" type="checkbox" ng-model="answers.<%= code_suitable(variable.name) %>"> 
+        <label for="checkbox-s<%=i%>-q<%=j%>">
+          <%= question.yes_text %>
+        </label>
       <%- else -%>
         <%- question.variables.each.with_index do |variable, k| -%>
-        <label id="s<%=i%>-q<%=j%>-a<%=k%>">
-          <input type="checkbox" ng-model="answers.<%= code_suitable(variable.name) %>"> <%= question.variable_text(variable) %>
+        <input id="checkbox-s<%=i%>-q<%=j%>-a<%=k%>" type="checkbox" ng-model="answers.<%= code_suitable(variable.name) %>"> 
+        <label for="checkbox-s<%=i%>-q<%=j%>-a<%=k%>">
+          <%= question.variable_text(variable) %>
         </label>
         <%- end -%>
       <%- end -%>
