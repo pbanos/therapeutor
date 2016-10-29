@@ -21,12 +21,14 @@ class Therapeutor::CLI < Thor
           app_template.generate(questionnaire, destination)
         rescue ::Therapeutor::AppTemplate::ERBProcessingError => exc
           STDERR.puts("#{exc}:")
-          STDERR.puts(exc.cause)
-          last_erb_line = exc.cause.backtrace.select do |line|
-            /\A\(erb\)\:\d+\:in /.match(line)
-          end.last
-          select_backtrace = exc.cause.backtrace[0..exc.cause.backtrace.index(last_erb_line)]
-          STDERR.puts(select_backtrace.join("\n"))
+          STDERR.puts((exc.respond_to?(:cause) && exc.cause) || exc.message)
+          if exc.respond_to?(:cause)
+            last_erb_line = exc.cause.backtrace.select do |line|
+              /\A\(erb\)\:\d+\:in /.match(line)
+            end.last
+            select_backtrace = exc.cause.backtrace[0..exc.cause.backtrace.index(last_erb_line)]
+            STDERR.puts(select_backtrace.join("\n"))
+          end
           exit(4)
         rescue Exception => exc
           STDERR.puts("Error while generating questionnaire from specification: #{exc}")
