@@ -1541,6 +1541,9 @@ therapies:
   level_conditions:
     recommended: []
     notRecommended:
+    - text: Embarazo o deseo de gestación (categoría C de la FDA). Sin embargo, parece la opción más segura durante la gestación, debiendo valorar la relación riesgo beneficio e intentando evitarlo en el primer trimestre.
+      condition:
+        variable: embarazo
     - text: Puede disminuir la circulación periférica.
       condition:
         variable: arteriopata_perifrica
@@ -1923,9 +1926,6 @@ therapies:
       condition:
         variable: farma_xilometazolinanasal
     forbidden:
-    - text: Embarazo o deseo de gestación (categoría C de la FDA).
-      condition:
-        variable: embarazo
     - text: Alergia o intolerancia al fármaco.
       condition:
         variable: alergia_propranolol
@@ -2202,6 +2202,9 @@ therapies:
   level_conditions:
     recommended: []
     notRecommended:
+    - text: "Independientemente de una posible efectividad de valproato en un paciente como el presentado, se considera no recomendado debido a la variabilidad interindividual que el fármaco presenta en dosis, niveles plasmáticos y efectividad."
+      condition:
+        constant: true
     - text: Su metabolización hepática puede potenciar la síntesis de determinados
         enzimas como la ALA sintetasa, que puede dar lugar a un aumento de porfirinas,
         lo que provoca la exacerbación de la enfermedad.
