@@ -31,6 +31,10 @@ To generate a questionnaire using a [questionnaire specification](#questionnaire
 
     therapeutor generate path/to/questionnaire.yml  path/for/questionnaire/app
 
+You may also specify a path to a therapeutor app template using the --template-path option:
+
+    therapeutor generate --template-path path/to/app/template path/to/questionnaire.yml  path/for/questionnaire/app
+
 ## Running a generated app
 
 Therapeutor's app template is a parametrization of a [yeoman generator-angular](https://github.com/yeoman/generator-angular), therefore you will need to satisfy is requirements in order to run a therapeutor app:

@@ -3,6 +3,7 @@ require 'yaml'
 require "therapeutor"
 
 class Therapeutor::CLI < Thor
+  option :template_path, desc: "use a parametrized app template at PATH", banner: 'PATH', default: Therapeutor::AppTemplate::DEFAULT_APP_TEMPLATE_PATH, aliases: 't'
   desc "generate SPEC DEST", "generate an questionnaire application on DEST using SPEC as specification"
   def generate(spec_file, destination)
     if File.exist?(spec_file)
@@ -16,13 +17,13 @@ class Therapeutor::CLI < Thor
       end
       if questionnaire.valid? # TODO: validate questionnaire
         puts "Generating questionnaire application..."
-        app_template = Therapeutor::AppTemplate.new # TODO: Allow specifying a different template
+        app_template = Therapeutor::AppTemplate.new(options[:template_path])
         begin
           app_template.generate(questionnaire, destination)
         rescue ::Therapeutor::AppTemplate::ERBProcessingError => exc
           STDERR.puts("#{exc}:")
-          STDERR.puts((exc.respond_to?(:cause) && exc.cause) || exc.message)
           if exc.respond_to?(:cause)
+            STDERR.puts(exc.cause)
             last_erb_line = exc.cause.backtrace.select do |line|
               /\A\(erb\)\:\d+\:in /.match(line)
             end.last
